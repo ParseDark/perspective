@@ -134,7 +134,7 @@ export default function(Module) {
      *
      * @example
      * // Returns a new View, pivoted in the row space by the "name" column.
-     * table.view({row_pivots: ["name"]});
+     * await table.view({row_pivots: ["name"]});
      *
      * @class
      * @hideconstructor
@@ -275,7 +275,7 @@ export default function(Module) {
      *
      * @example
      * // Create a view
-     * const view = table.view({
+     * const view = await table.view({
      *      columns: ["a", "b"]
      * });
      * const schema = await view.schema(); // {a: "float", b: "string"}
@@ -311,7 +311,7 @@ export default function(Module) {
      *
      * @example
      * // Create a view with computed columns
-     * const view = table.view({
+     * const view = await table.view({
      *      computed_columns: [{
      *          column: "x + y",
      *          computed_function_name: "+",
@@ -1361,7 +1361,7 @@ export default function(Module) {
      * desc", "asc abs", "desc abs", "col asc abs", "col desc abs".
      *
      * @example
-     * var view = table.view({
+     * var view = await table.view({
      *      row_pivots: ["region"],
      *      columns: ["region"],
      *      aggregates: {"region": "dominant"},

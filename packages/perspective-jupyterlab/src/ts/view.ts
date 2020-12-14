@@ -282,6 +282,7 @@ export class PerspectiveView extends DOMWidgetView {
                     let client_table: Table;
                     let client_view: View;
 
+                    // TODO: make async
                     kernel_view.to_arrow().then((arrow: ArrayBuffer) => {
                         client_table = this.client_worker.table(arrow, table_options);
                         client_view = client_table.view();
