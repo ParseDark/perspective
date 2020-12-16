@@ -20,7 +20,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -51,7 +51,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -82,7 +82,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -113,7 +113,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -144,7 +144,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -175,7 +175,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -206,7 +206,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -237,7 +237,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -268,7 +268,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -299,7 +299,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -330,7 +330,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -361,7 +361,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -392,7 +392,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -423,7 +423,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -454,7 +454,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -486,7 +486,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -518,7 +518,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -550,7 +550,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -582,7 +582,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -614,7 +614,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -646,7 +646,7 @@ module.exports = perspective => {
                 a: "date"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -679,7 +679,7 @@ module.exports = perspective => {
             const table = perspective.table({
                 a: "datetime"
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -710,7 +710,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -741,7 +741,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -772,7 +772,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -803,7 +803,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -834,7 +834,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -865,7 +865,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -896,7 +896,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -927,7 +927,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -958,7 +958,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -989,7 +989,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1020,7 +1020,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1051,7 +1051,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1082,7 +1082,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1113,7 +1113,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1144,7 +1144,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1176,7 +1176,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1208,7 +1208,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1240,7 +1240,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1272,7 +1272,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1304,7 +1304,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -1336,7 +1336,7 @@ module.exports = perspective => {
                 a: "datetime"
             });
 
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",

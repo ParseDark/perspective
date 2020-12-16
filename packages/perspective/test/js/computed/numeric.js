@@ -21,7 +21,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `abs(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -44,7 +44,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `sqrt(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -67,7 +67,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `invert(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -92,7 +92,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `pow(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -116,7 +116,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `bucket(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -140,7 +140,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `bucket(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -164,7 +164,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `bucket(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -188,7 +188,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `bucket(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -212,7 +212,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `bucket(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -236,7 +236,7 @@ module.exports = perspective => {
                     for (let i = 0; i < common.cols.length; i++) {
                         const x = common.cols[i];
                         const name = `bucket(${x})`;
-                        let view = table.view({
+                        let view = await table.view({
                             columns: [name, x],
                             computed_columns: [
                                 {
@@ -259,7 +259,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [4, 9, 16, 20, 81, 1000]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["sqrt"],
                     computed_columns: [
                         {
@@ -279,7 +279,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [4, 9, null, undefined, 16]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["sqrt"],
                     computed_columns: [
                         {
@@ -299,7 +299,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [4.5, 9.5, 16.5, 20.5, 81.5, 1000.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["sqrt"],
                     computed_columns: [
                         {
@@ -319,7 +319,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [4.5, 9.5, null, undefined, 16.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["sqrt"],
                     computed_columns: [
                         {
@@ -339,7 +339,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2, 4, 6, 8, 10]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["pow2"],
                     computed_columns: [
                         {
@@ -359,7 +359,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2, 4, null, undefined, 10]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["pow2"],
                     computed_columns: [
                         {
@@ -379,7 +379,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2.5, 4.5, 6.5, 8.5, 10.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["pow2"],
                     computed_columns: [
                         {
@@ -399,7 +399,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2.5, 4.5, null, undefined, 10.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["pow2"],
                     computed_columns: [
                         {
@@ -419,7 +419,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2, 4, 6, 8, 10]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["invert"],
                     computed_columns: [
                         {
@@ -439,7 +439,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2, 4, null, undefined, 10]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["invert"],
                     computed_columns: [
                         {
@@ -459,7 +459,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2.5, 4.5, 6.5, 8.5, 10.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["invert"],
                     computed_columns: [
                         {
@@ -479,7 +479,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2.5, 4.5, null, undefined, 10.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["invert"],
                     computed_columns: [
                         {
@@ -499,7 +499,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2, 4, 6, 8, 10]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["log"],
                     computed_columns: [
                         {
@@ -519,7 +519,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2, 4, null, undefined, 10]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["log"],
                     computed_columns: [
                         {
@@ -542,7 +542,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2.5, 4.5, 6.5, 8.5, 10.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["log"],
                     computed_columns: [
                         {
@@ -562,7 +562,7 @@ module.exports = perspective => {
                 const table = perspective.table({
                     a: [2.5, 4.5, null, undefined, 10.5]
                 });
-                let view = table.view({
+                let view = await table.view({
                     columns: ["log"],
                     computed_columns: [
                         {
@@ -594,7 +594,7 @@ module.exports = perspective => {
                             const x = common.cols[i];
                             const y = common.cols[j];
                             const name = `(${x} + ${y})`;
-                            const view = table.view({
+                            const view = await table.view({
                                 columns: [name, x, y],
                                 computed_columns: [
                                     {
@@ -633,7 +633,7 @@ module.exports = perspective => {
                             const x = common.cols[i];
                             const y = common.cols[j];
                             const name = `(${x} - ${y})`;
-                            const view = table.view({
+                            const view = await table.view({
                                 columns: [name, x, y],
                                 computed_columns: [
                                     {
@@ -672,7 +672,7 @@ module.exports = perspective => {
                             const x = common.cols[i];
                             const y = common.cols[j];
                             const name = `(${x} * ${y})`;
-                            const view = table.view({
+                            const view = await table.view({
                                 columns: [name, x, y],
                                 computed_columns: [
                                     {
@@ -712,7 +712,7 @@ module.exports = perspective => {
                             const x = common.cols[i];
                             const y = common.cols[j];
                             const name = `(${x} / ${y})`;
-                            const view = table.view({
+                            const view = await table.view({
                                 columns: [name, x, y],
                                 computed_columns: [
                                     {
@@ -756,7 +756,7 @@ module.exports = perspective => {
                             const x = common.cols[i];
                             const y = common.cols[j];
                             const name = `(${x} % ${y})`;
-                            const view = table.view({
+                            const view = await table.view({
                                 columns: [name, x, y],
                                 computed_columns: [
                                     {
@@ -788,7 +788,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, add ints", async function() {
                 const table = perspective.table(common.int_float_data);
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["sum"],
                     computed_columns: [
                         {
@@ -807,7 +807,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, add floats", async function() {
                 const table = perspective.table(common.int_float_data);
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["sum"],
                     computed_columns: [
                         {
@@ -826,7 +826,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, add mixed", async function() {
                 const table = perspective.table(common.int_float_data);
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["sum"],
                     computed_columns: [
                         {
@@ -848,14 +848,14 @@ module.exports = perspective => {
                     b: [1.5, undefined, 2.5, 3.5, 4.5]
                 });
 
-                const full = table.view();
+                const full = await table.view();
                 expect(await full.to_columns()).toEqual({
                     a: [1, 2, null, 3, 4],
                     b: [1.5, null, 2.5, 3.5, 4.5]
                 });
                 full.delete();
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["sum"],
                     computed_columns: [
                         {
@@ -873,7 +873,7 @@ module.exports = perspective => {
 
             it("Computed column of arity 2, subtract ints", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
-                const view = table.view({
+                const view = await table.view({
                     columns: ["difference"],
                     computed_columns: [
                         {
@@ -891,7 +891,7 @@ module.exports = perspective => {
 
             it("Computed column of arity 2, subtract floats", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
-                const view = table.view({
+                const view = await table.view({
                     columns: ["difference"],
                     computed_columns: [
                         {
@@ -909,7 +909,7 @@ module.exports = perspective => {
 
             it("Computed column of arity 2, subtract mixed", async function() {
                 const table = perspective.table(common.int_float_data);
-                const view = table.view({
+                const view = await table.view({
                     columns: ["difference"],
                     computed_columns: [
                         {
@@ -938,7 +938,7 @@ module.exports = perspective => {
                 });
                 full.delete();
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["difference"],
                     computed_columns: [
                         {
@@ -957,7 +957,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, multiply ints", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["multiply"],
                     computed_columns: [
                         {
@@ -976,7 +976,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, multiply floats", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["multiply"],
                     computed_columns: [
                         {
@@ -995,7 +995,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, multiply mixed", async function() {
                 const table = perspective.table(common.int_float_data);
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["multiply"],
                     computed_columns: [
                         {
@@ -1024,7 +1024,7 @@ module.exports = perspective => {
                 });
                 full.delete();
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["product"],
                     computed_columns: [
                         {
@@ -1043,7 +1043,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, divide ints", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["divide"],
                     computed_columns: [
                         {
@@ -1061,7 +1061,7 @@ module.exports = perspective => {
 
             it("Computed column of arity 2, divide floats", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
-                const view = table.view({
+                const view = await table.view({
                     columns: ["divide"],
                     computed_columns: [
                         {
@@ -1079,7 +1079,7 @@ module.exports = perspective => {
 
             it("Computed column of arity 2, divide mixed", async function() {
                 const table = perspective.table(common.int_float_data);
-                const view = table.view({
+                const view = await table.view({
                     columns: ["divide"],
                     computed_columns: [
                         {
@@ -1108,7 +1108,7 @@ module.exports = perspective => {
                 });
                 full.delete();
 
-                const view = table.view({
+                const view = await table.view({
                     columns: ["divide"],
                     computed_columns: [
                         {
@@ -1127,7 +1127,7 @@ module.exports = perspective => {
             it("Computed column of arity 2, pow ints", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "pow",
@@ -1144,7 +1144,7 @@ module.exports = perspective => {
 
             it("Computed column of arity 2, pow floats", async function() {
                 const table = perspective.table(common.int_float_subtract_data);
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "pow",
@@ -1161,7 +1161,7 @@ module.exports = perspective => {
 
             it("Computed column of arity 2, pow mixed", async function() {
                 const table = perspective.table(common.int_float_data);
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "pow",
@@ -1189,7 +1189,7 @@ module.exports = perspective => {
                 });
                 full.delete();
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "pow",
@@ -1212,7 +1212,7 @@ module.exports = perspective => {
                     b: [0, 1.5, undefined, 2.5, 3.5, 4.5, -10, 0, -5]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "pow",
@@ -1236,7 +1236,7 @@ module.exports = perspective => {
                     a: [100, 75, 50, 25, 10, 1],
                     b: [100, 100, 100, 100, 100, 100]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["%"],
                     computed_columns: [
                         {
@@ -1257,7 +1257,7 @@ module.exports = perspective => {
                     a: [7.5, 5.5, 2.5, 1.5, 0.5],
                     b: [22.5, 16.5, 7.5, 4.5, 1.5]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["%"],
                     computed_columns: [
                         {
@@ -1278,7 +1278,7 @@ module.exports = perspective => {
                     a: [55.5, 65.5, 75.5, 85.5, 95.5],
                     b: [100, 100, 100, 100, 100]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["%"],
                     computed_columns: [
                         {
@@ -1299,7 +1299,7 @@ module.exports = perspective => {
                     a: [100, null, 50, 25, 10, 1],
                     b: [100, 100, 100, 100, undefined, 100]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["%"],
                     computed_columns: [
                         {
@@ -1321,7 +1321,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 100, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1343,7 +1343,7 @@ module.exports = perspective => {
                     b: [1.22222222222, 5.5, 7.55555555555, 4.5]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1365,7 +1365,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1387,7 +1387,7 @@ module.exports = perspective => {
                     b: [100, undefined, 50, 100, undefined, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1409,7 +1409,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 100, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1431,7 +1431,7 @@ module.exports = perspective => {
                     b: [1.22222222222, 5.5, 7.55555555555, 4.5]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1453,7 +1453,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1475,7 +1475,7 @@ module.exports = perspective => {
                     b: [100, undefined, 50, 100, undefined, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1497,7 +1497,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 100, 0]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1519,7 +1519,7 @@ module.exports = perspective => {
                     b: [1.22222222222, 5.5, 7.55555555555, 0.555555555]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1541,7 +1541,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 5]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1563,7 +1563,7 @@ module.exports = perspective => {
                     b: [100, undefined, 50, 100, undefined, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1585,7 +1585,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 100, 0]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1607,7 +1607,7 @@ module.exports = perspective => {
                     b: [1.22222222222, 5.5, 7.55555555555, 4.5]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1629,7 +1629,7 @@ module.exports = perspective => {
                     b: [100, 100, 100, 100, 5]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",
@@ -1651,7 +1651,7 @@ module.exports = perspective => {
                     b: [100, undefined, 50, 100, undefined, 100]
                 });
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "result",

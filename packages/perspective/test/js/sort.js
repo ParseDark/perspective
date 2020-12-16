@@ -19,7 +19,7 @@ module.exports = perspective => {
         describe("On hidden columns", function() {
             it("Column path should not emit hidden sorts", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     columns: ["w", "y"],
                     sort: [["x", "desc"]]
                 });
@@ -31,7 +31,7 @@ module.exports = perspective => {
 
             it("Column path should not emit hidden column sorts", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     columns: ["w"],
                     row_pivots: ["y"],
                     column_pivots: ["z"],
@@ -45,7 +45,7 @@ module.exports = perspective => {
 
             it("Column path should not emit hidden regular and column sorts", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     columns: ["w"],
                     row_pivots: ["y"],
                     column_pivots: ["z"],
@@ -62,7 +62,7 @@ module.exports = perspective => {
 
             it("unpivoted", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     columns: ["w", "y"],
                     sort: [["x", "desc"]]
                 });
@@ -84,7 +84,7 @@ module.exports = perspective => {
 
             it("row pivot ['y']", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     columns: ["w"],
                     row_pivots: ["y"],
                     sort: [["x", "desc"]]
@@ -109,7 +109,7 @@ module.exports = perspective => {
                 });
                 // Aggregate should be overriden if the sort column is hidden
                 // AND also in row pivots
-                const view = table.view({
+                const view = await table.view({
                     aggregates: {
                         x: "sum",
                         y: "count"
@@ -135,7 +135,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4, 5],
                     y: ["a", "b", "b", "b", "c"]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["x"],
                     row_pivots: ["y"],
                     sort: [["y", "desc"]]
@@ -154,7 +154,7 @@ module.exports = perspective => {
 
             it("column pivot ['y']", async function() {
                 const table = perspective.table(data);
-                const view = table.view({
+                const view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
                     sort: [["x", "desc"]]
@@ -179,7 +179,7 @@ module.exports = perspective => {
 
             it("column pivot ['y'], col desc sort", async function() {
                 const table = perspective.table(data);
-                const view = table.view({
+                const view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
                     sort: [["x", "col desc"]]
@@ -203,7 +203,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["a", "a", "a", "b"]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["x"],
                     column_pivots: ["y"],
                     sort: [["y", "desc"]]
@@ -227,7 +227,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["a", "a", "a", "b"]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["x"],
                     column_pivots: ["y"],
                     sort: [["y", "col desc"]]
@@ -250,7 +250,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["a", "a", "a", "b"]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["x"],
                     column_pivots: ["y"],
                     aggregates: {y: "count"},
@@ -273,7 +273,7 @@ module.exports = perspective => {
 
             it("column pivot ['y'] with extra aggregates", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
                     aggregates: {w: "sum", z: "last"},
@@ -301,7 +301,7 @@ module.exports = perspective => {
                     y: ["x", "x", "y", "x"],
                     z: [1, 2, 3, 4]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["z"],
                     row_pivots: ["x"],
                     column_pivots: ["y"],
@@ -325,7 +325,7 @@ module.exports = perspective => {
                     y: ["x", "x", "y", "x"],
                     z: [1, 2, 3, 4]
                 });
-                const view = table.view({
+                const view = await table.view({
                     columns: ["z"],
                     row_pivots: ["x"],
                     column_pivots: ["y"],
@@ -345,7 +345,7 @@ module.exports = perspective => {
 
             it("column pivot ['y'] has correct # of columns", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
                     sort: [["x", "desc"]]

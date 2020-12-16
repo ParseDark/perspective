@@ -80,7 +80,7 @@ async function init_dynamic({table_size, update_size, tick_rate}) {
 
 async function newArrow(total_rows) {
     const table = worker.table(newRows(total_rows));
-    const vw = table.view();
+    const vw = await table.view();
     const arrow = await vw.to_arrow();
     vw.delete();
     table.delete();

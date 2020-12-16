@@ -280,49 +280,45 @@ export class PerspectiveView extends DOMWidgetView {
                 // If the widget is editable, set up client/server editing
                 if (this.pWidget.editable) {
                     let client_table: Table;
-                    let client_view: View;
 
                     // TODO: make async
                     kernel_view.to_arrow().then((arrow: ArrayBuffer) => {
                         client_table = this.client_worker.table(arrow, table_options);
-                        client_view = client_table.view();
+                        client_table.view().then(client_view => {
+                            let client_edit_port: number, server_edit_port: number;
 
-                        let client_edit_port: number, server_edit_port: number;
+                            // Create ports on the client and kernel.
+                            Promise.all([this.pWidget.load(client_table), this.pWidget.getEditPort(), kernel_table.make_port()]).then(outs => {
+                                client_edit_port = outs[1];
+                                server_edit_port = outs[2];
+                            });
 
-                        // Create ports on the client and kernel.
-                        Promise.all([this.pWidget.load(client_table), this.pWidget.getEditPort(), kernel_table.make_port()]).then(ports => {
-                            client_edit_port = ports[1];
-                            server_edit_port = ports[2];
+                            // When the client updates, if the update comes
+                            // through the edit port then forward it to
+                            // the server.
+                            client_view.on_update(
+                                updated => {
+                                    if (updated.port_id === client_edit_port) {
+                                        kernel_table.update(updated.delta, {
+                                            port_id: server_edit_port
+                                        });
+                                    }
+                                },
+                                {mode: "row"}
+                            );
+
+                            // If the server updates, and the edit is not coming
+                            // from the server edit port, then synchronize state
+                            // with the client.
+                            kernel_view.on_update(
+                                updated => {
+                                    if (updated.port_id !== server_edit_port) {
+                                        client_table.update(updated.delta); // any port, we dont care
+                                    }
+                                },
+                                {mode: "row"}
+                            );
                         });
-
-                        /**
-                         * When the client updates, if the update comes through
-                         * the edit port then forward it to the server.
-                         */
-                        client_view.on_update(
-                            updated => {
-                                if (updated.port_id === client_edit_port) {
-                                    kernel_table.update(updated.delta, {
-                                        port_id: server_edit_port
-                                    });
-                                }
-                            },
-                            {mode: "row"}
-                        );
-
-                        /**
-                         * If the server updates, and the edit is not coming
-                         * from the server edit port, then synchronize state
-                         * with the client.
-                         */
-                        kernel_view.on_update(
-                            updated => {
-                                if (updated.port_id !== server_edit_port) {
-                                    client_table.update(updated.delta); // any port, we dont care
-                                }
-                            },
-                            {mode: "row"}
-                        );
                     });
                 } else {
                     // Just load the view into the widget, everything else

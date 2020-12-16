@@ -51,7 +51,7 @@ module.exports = perspective => {
                     {x: 3, y: "123456789012b", z: true},
                     {x: 4, y: "123456789012b", z: false}
                 ]);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["y", "contains", "123456789012a"]]
                 });
                 let json = await view.to_json();
@@ -62,7 +62,7 @@ module.exports = perspective => {
 
             it("x > 2", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", ">", 2.0]]
                 });
                 let json = await view.to_json();
@@ -73,7 +73,7 @@ module.exports = perspective => {
 
             it("x < 3", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", "<", 3.0]]
                 });
                 let json = await view.to_json();
@@ -84,7 +84,7 @@ module.exports = perspective => {
 
             it("x > 4", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", ">", 4]]
                 });
                 let json = await view.to_json();
@@ -95,7 +95,7 @@ module.exports = perspective => {
 
             it("x < 0", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", ">", 4]]
                 });
                 let json = await view.to_json();
@@ -106,7 +106,7 @@ module.exports = perspective => {
 
             it("w > datetime as string", async function() {
                 var table = perspective.table(date_range_data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["w", ">", "10/01/2018"]]
                 });
                 let json = await view.to_json();
@@ -117,7 +117,7 @@ module.exports = perspective => {
 
             it("w < datetime as string", async function() {
                 var table = perspective.table(date_range_data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["w", "<", "10/01/2018"]]
                 });
                 let json = await view.to_json();
@@ -141,7 +141,7 @@ module.exports = perspective => {
                 it("w > date as string", async function() {
                     var table = perspective.table(schema);
                     table.update(date_results);
-                    var view = table.view({
+                    var view = await table.view({
                         filter: [["w", ">", "10/02/2018"]]
                     });
                     let json = await view.to_json();
@@ -153,7 +153,7 @@ module.exports = perspective => {
                 it("w < date as string", async function() {
                     var table = perspective.table(schema);
                     table.update(date_results);
-                    var view = table.view({
+                    var view = await table.view({
                         filter: [["w", "<", "10/02/2018"]]
                     });
                     let json = await view.to_json();
@@ -167,7 +167,7 @@ module.exports = perspective => {
         describe("EQ", function() {
             it("x == 1", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", "==", 1]]
                 });
                 let json = await view.to_json();
@@ -178,7 +178,7 @@ module.exports = perspective => {
 
             it("x == 5", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", "==", 5]]
                 });
                 let json = await view.to_json();
@@ -189,7 +189,7 @@ module.exports = perspective => {
 
             it("y == 'a'", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["y", "==", "a"]]
                 });
                 let json = await view.to_json();
@@ -200,7 +200,7 @@ module.exports = perspective => {
 
             it("y == 'e'", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["y", "==", "e"]]
                 });
                 let json = await view.to_json();
@@ -211,7 +211,7 @@ module.exports = perspective => {
 
             it("z == true", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["z", "==", true]]
                 });
                 let json = await view.to_json();
@@ -222,7 +222,7 @@ module.exports = perspective => {
 
             it("z == false", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["z", "==", false]]
                 });
                 let json = await view.to_json();
@@ -233,7 +233,7 @@ module.exports = perspective => {
 
             it("w == yesterday", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["w", "==", yesterday]]
                 });
                 let json = await view.to_json();
@@ -244,7 +244,7 @@ module.exports = perspective => {
 
             it("w != yesterday", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["w", "!=", yesterday]]
                 });
                 let json = await view.to_json();
@@ -257,7 +257,7 @@ module.exports = perspective => {
         describe("in", function() {
             it("y in ['a', 'b']", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["y", "in", ["a", "b"]]]
                 });
                 let json = await view.to_json();
@@ -270,7 +270,7 @@ module.exports = perspective => {
         describe("not in", function() {
             it("y not in ['d']", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["y", "not in", ["d"]]]
                 });
                 let json = await view.to_json();
@@ -283,7 +283,7 @@ module.exports = perspective => {
         describe("contains", function() {
             it("y contains 'a'", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["y", "contains", "a"]]
                 });
                 let json = await view.to_json();
@@ -296,7 +296,7 @@ module.exports = perspective => {
         describe("multiple", function() {
             it("x > 1 & x < 4", async function() {
                 var table = perspective.table(data);
-                var view = table.view({
+                var view = await table.view({
                     filter: [
                         ["x", ">", 1],
                         ["x", "<", 4]
@@ -311,7 +311,7 @@ module.exports = perspective => {
             it("y contains 'a' OR y contains 'b'", async function() {
                 var table = perspective.table(data);
                 // when `filter_op` is provided, perspective returns data differently. In this case, returned data should satisfy either/or of the filter conditions.
-                var view = table.view({
+                var view = await table.view({
                     filter_op: "or",
                     filter: [
                         ["y", "contains", "a"],
@@ -336,7 +336,7 @@ module.exports = perspective => {
                     {x: 2, y: "x"},
                     {x: 3, y: "y"}
                 ]);
-                const view = table.view({
+                const view = await table.view({
                     filter: [["y", "is null"]]
                 });
                 const answer = [
@@ -359,7 +359,7 @@ module.exports = perspective => {
                     {x: 2, y: 4},
                     {x: 3, y: 5}
                 ]);
-                const view = table.view({
+                const view = await table.view({
                     filter: [["y", "is null"]]
                 });
                 const answer = [
@@ -382,7 +382,7 @@ module.exports = perspective => {
                     {x: 2, y: "1/1/2019"},
                     {x: 3, y: "1/1/2019"}
                 ]);
-                const view = table.view({
+                const view = await table.view({
                     filter: [["y", "is null"]]
                 });
                 const answer = [
@@ -406,7 +406,7 @@ module.exports = perspective => {
                     {x: 4, y: 2},
                     {x: null, y: 2}
                 ]);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", ">", 2]]
                 });
                 var answer = [
@@ -428,7 +428,7 @@ module.exports = perspective => {
                     {x: 4, y: 2},
                     {x: null, y: 2}
                 ]);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", "<", 3]]
                 });
                 var answer = [{x: 2, y: 1}];
@@ -448,7 +448,7 @@ module.exports = perspective => {
                     {x: 4.5, y: 2},
                     {x: null, y: 2}
                 ]);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", ">", 2.5]]
                 });
                 var answer = [
@@ -472,7 +472,7 @@ module.exports = perspective => {
                     {x: null, y: 2}
                 ];
                 table.update(dataSet);
-                var view = table.view({
+                var view = await table.view({
                     filter: [["x", ">", null]]
                 });
                 var answer = dataSet;

@@ -25,7 +25,7 @@ describe("perspective.table", function() {
     it("does not leak memory after delete() is called on a view", async () => {
         const table = perspective.table(arr.slice());
         for (var i = 0; i < 500; i++) {
-            const view = table.view();
+            const view = await table.view();
             expect(await view.num_rows()).toEqual(9994);
             view.delete();
         }

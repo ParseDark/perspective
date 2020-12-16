@@ -118,7 +118,7 @@ describe("Table", async () => {
 describe("Update", async () => {
     // Generate update data from Perspective
     const static_table = worker.table(data.arrow.slice());
-    const static_view = static_table.view();
+    const static_view = await static_table.view();
 
     let table, view;
 
@@ -147,7 +147,7 @@ describe("Update", async () => {
 
             describe("ctx0", async () => {
                 table = worker.table(data.arrow.slice());
-                view = table.view();
+                view = await table.view();
 
                 let test_data = await static_view[`to_${name}`]({end_row: 500});
                 benchmark(name, async () => {
@@ -160,7 +160,7 @@ describe("Update", async () => {
 
             describe("ctx1", async () => {
                 table = worker.table(data.arrow.slice());
-                view = table.view({
+                view = await table.view({
                     row_pivots: ["State"]
                 });
 
@@ -175,7 +175,7 @@ describe("Update", async () => {
 
             describe("ctx1 deep", async () => {
                 table = worker.table(data.arrow.slice());
-                view = table.view({
+                view = await table.view({
                     row_pivots: ["State", "City"]
                 });
                 let test_data = await static_view[`to_${name}`]({end_row: 500});
@@ -189,7 +189,7 @@ describe("Update", async () => {
 
             describe("ctx2", async () => {
                 table = worker.table(data.arrow.slice());
-                view = table.view({
+                view = await table.view({
                     row_pivots: ["State"],
                     column_pivots: ["Sub-Category"]
                 });
@@ -204,7 +204,7 @@ describe("Update", async () => {
 
             describe("ctx2 deep", async () => {
                 table = worker.table(data.arrow.slice());
-                view = table.view({
+                view = await table.view({
                     row_pivots: ["State", "City"],
                     column_pivots: ["Sub-Category"]
                 });
@@ -219,7 +219,7 @@ describe("Update", async () => {
 
             describe("ctx1.5", async () => {
                 table = worker.table(data.arrow.slice());
-                view = table.view({
+                view = await table.view({
                     column_pivots: ["Sub-Category"]
                 });
                 let test_data = await static_view[`to_${name}`]({end_row: 500});
@@ -237,7 +237,7 @@ describe("Update", async () => {
 describe("Deltas", async () => {
     // Generate update data from Perspective
     const static_table = worker.table(data.arrow.slice());
-    const static_view = static_table.view();
+    const static_view = await static_table.view();
 
     let table, view;
 
@@ -249,7 +249,7 @@ describe("Deltas", async () => {
     describe("mixed", async () => {
         describe("ctx0", async () => {
             table = worker.table(data.arrow.slice());
-            view = table.view();
+            view = await table.view();
             view.on_update(() => {}, {mode: "row"});
             const test_data = await static_view.to_arrow({end_row: 500});
             benchmark("row delta", async () => {
@@ -262,7 +262,7 @@ describe("Deltas", async () => {
 
         describe("ctx1", async () => {
             table = worker.table(data.arrow.slice());
-            view = table.view({
+            view = await table.view({
                 row_pivots: ["State"]
             });
             view.on_update(() => {}, {mode: "row"});
@@ -277,7 +277,7 @@ describe("Deltas", async () => {
 
         describe("ctx1 deep", async () => {
             table = worker.table(data.arrow.slice());
-            view = table.view({
+            view = await table.view({
                 row_pivots: ["State", "City"]
             });
             view.on_update(() => {}, {mode: "row"});
@@ -292,7 +292,7 @@ describe("Deltas", async () => {
 
         describe("ctx2", async () => {
             table = worker.table(data.arrow.slice());
-            view = table.view({
+            view = await table.view({
                 row_pivots: ["State"],
                 column_pivots: ["Sub-Category"]
             });
@@ -308,7 +308,7 @@ describe("Deltas", async () => {
 
         describe("ctx2 deep", async () => {
             table = worker.table(data.arrow.slice());
-            view = table.view({
+            view = await table.view({
                 row_pivots: ["State", "City"],
                 column_pivots: ["Sub-Category"]
             });
@@ -324,7 +324,7 @@ describe("Deltas", async () => {
 
         describe("ctx1.5", async () => {
             table = worker.table(data.arrow.slice());
-            view = table.view({
+            view = await table.view({
                 column_pivots: ["Sub-Category"]
             });
             view.on_update(() => {}, {mode: "row"});
@@ -366,7 +366,7 @@ describe("View", async () => {
                         });
 
                         benchmark(`view`, async () => {
-                            view = table.view(config);
+                            view = await table.view(config);
                             await view.schema();
                         });
                     });
@@ -375,7 +375,7 @@ describe("View", async () => {
                         let view;
 
                         beforeAll(async () => {
-                            view = table.view(config);
+                            view = await table.view(config);
                             await view.schema();
                         });
 
@@ -456,7 +456,7 @@ describe("Computed Column", async () => {
 
                         table = table.add_computed([COMPUTED_CONFIG]);
                     } else {
-                        view = table.view({
+                        view = await table.view({
                             computed_columns: [COMPUTED_CONFIG]
                         });
                     }
@@ -467,7 +467,7 @@ describe("Computed Column", async () => {
 
                 if (!add_computed_method) {
                     benchmark(`sort computed: \`${name}\``, async () => {
-                        view = table.view({
+                        view = await table.view({
                             sort: [["computed", "desc"]],
                             computed_columns: [COMPUTED_CONFIG]
                         });
@@ -494,7 +494,7 @@ describe("Computed Column", async () => {
                 }
 
                 benchmark(`row pivot computed: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         row_pivots: ["computed"],
                         computed_columns: [COMPUTED_CONFIG]
                     });
@@ -520,7 +520,7 @@ describe("Computed Column", async () => {
                 }
 
                 benchmark(`row and column pivot computed: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         row_pivots: ["computed"],
                         column_pivots: ["computed"],
                         computed_columns: [COMPUTED_CONFIG]
@@ -547,7 +547,7 @@ describe("Computed Column", async () => {
                 }
 
                 benchmark(`column pivot computed: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         column_pivots: ["computed"],
                         computed_columns: [COMPUTED_CONFIG]
                     });
@@ -587,7 +587,7 @@ describe("Computed Column", async () => {
                 }
 
                 benchmark(`computed complex: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         computed_columns: CONFIG
                     });
 
@@ -596,7 +596,7 @@ describe("Computed Column", async () => {
                 });
 
                 benchmark(`sort computed complex: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         sort: [["computed", "desc"]],
                         computed_columns: [COMPUTED_CONFIG]
                     });
@@ -622,7 +622,7 @@ describe("Computed Column", async () => {
                 }
 
                 benchmark(`row pivot computed complex: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         row_pivots: ["computed"],
                         computed_columns: CONFIG
                     });
@@ -648,7 +648,7 @@ describe("Computed Column", async () => {
                 }
 
                 benchmark(`row and column pivot computed complex: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         row_pivots: ["computed"],
                         column_pivots: ["computed"],
                         computed_columns: [COMPUTED_CONFIG]
@@ -675,7 +675,7 @@ describe("Computed Column", async () => {
                 }
 
                 benchmark(`column pivot computed complex: \`${name}\``, async () => {
-                    view = table.view({
+                    view = await table.view({
                         column_pivots: ["computed"],
                         computed_columns: CONFIG
                     });

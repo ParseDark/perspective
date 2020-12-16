@@ -78,7 +78,7 @@ const datasource = async function() {
 const setup_handlers = async () => {
     const viewers = window.workspace.querySelectorAll("perspective-viewer");
     const client_table = viewers[0].table;
-    const client_view = client_table.view();
+    const client_view = await client_table.view();
 
     for (const viewer of viewers) {
         PORTS.push(await viewer.getEditPort());

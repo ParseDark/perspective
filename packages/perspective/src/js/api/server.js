@@ -96,6 +96,22 @@ export class Server {
                     }
                 }
                 break;
+            case "table_generate":
+                let g;
+                eval("g = " + msg.args);
+                g(function(tbl) {
+                    this._tables[msg.name] = tbl;
+                    this.post({
+                        id: msg.id,
+                        data: "created!"
+                    });
+                });
+                break;
+            case "table_execute":
+                let f;
+                eval("f = " + msg.f);
+                f(this._tables[msg.name]);
+                break;
             case "table_method":
             case "view_method":
                 this.process_method_call(msg);
@@ -116,23 +132,44 @@ export class Server {
                     try {
                         const msgs = this._views[msg.view_name];
 
-                        // The "raw" view constructor is synchronous - the
-                        // async layer is added through the `client` and
-                        // `server` modules.
-                        this._views[msg.view_name] = this._tables[msg.table_name].view(msg.config);
-                        this._views[msg.view_name].client_id = client_id;
+                        // When using the Node server, the `view()` constructor
+                        // returns a Promise, but in the Web Worker version,
+                        // view() synchronously returns an instance of a View.
+                        const view = this._tables[msg.table_name].view(msg.config);
 
-                        // Process cached messages for the view.
-                        if (msgs) {
-                            for (const msg of msgs) {
-                                this.process(msg);
+                        if (view && view.then) {
+                            view.then(view => {
+                                this._views[msg.view_name] = view;
+                                this._views[msg.view_name].client_id = client_id;
+
+                                // Process cached messages for the view.
+                                if (msgs) {
+                                    for (const msg of msgs) {
+                                        this.process(msg);
+                                    }
+                                }
+
+                                this.post({
+                                    id: msg.id,
+                                    data: msg.view_name
+                                });
+                            }).catch(error => this.process_error(msg, error));
+                        } else {
+                            this._views[msg.view_name] = view;
+                            this._views[msg.view_name].client_id = client_id;
+
+                            // Process cached messages for the view.
+                            if (msgs) {
+                                for (const msg of msgs) {
+                                    this.process(msg);
+                                }
                             }
-                        }
 
-                        this.post({
-                            id: msg.id,
-                            data: msg.view_name
-                        });
+                            this.post({
+                                id: msg.id,
+                                data: msg.view_name
+                            });
+                        }
                     } catch (error) {
                         this.process_error(msg, error);
                         return;

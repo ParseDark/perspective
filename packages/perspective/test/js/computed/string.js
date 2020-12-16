@@ -17,7 +17,7 @@ module.exports = perspective => {
             const table = perspective.table({
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -36,7 +36,7 @@ module.exports = perspective => {
             const table = perspective.table({
                 a: ["abc", "deeeeef", null, undefined, "abcdefghijk"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -55,7 +55,7 @@ module.exports = perspective => {
             const table = perspective.table({
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -74,7 +74,7 @@ module.exports = perspective => {
             const table = perspective.table({
                 a: ["abc", "deeeeef", null, undefined, "abcdefghijk"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -94,7 +94,7 @@ module.exports = perspective => {
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "upper1",
@@ -121,7 +121,7 @@ module.exports = perspective => {
             const table = perspective.table({
                 a: ["ABC", "DEF", "EfG", "HIjK", "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -140,7 +140,7 @@ module.exports = perspective => {
             const table = perspective.table({
                 a: ["ABC", "DEF", null, undefined, "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -160,7 +160,7 @@ module.exports = perspective => {
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "lower1",
@@ -191,7 +191,7 @@ module.exports = perspective => {
                 b: ["ABC", undefined, null, "HIjK", "lMNoP"]
             });
 
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "result",
@@ -213,7 +213,7 @@ module.exports = perspective => {
                 b: ["ABC", "ad", "asudfh", "HIjK", "lMNoP"]
             });
 
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "computed1",
@@ -223,7 +223,7 @@ module.exports = perspective => {
                 ]
             });
 
-            let view2 = table.view({
+            let view2 = await table.view({
                 computed_columns: [
                     {
                         column: "computed1",
@@ -251,7 +251,7 @@ module.exports = perspective => {
                 b: ["ABC", "not", "EfG", "HIjK", null]
             });
 
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "result",
@@ -273,7 +273,7 @@ module.exports = perspective => {
                 b: ["ABC".repeat(10), "DEF".repeat(10), undefined, "HIjK", "lMNoP"]
             });
 
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "result",
@@ -296,7 +296,7 @@ module.exports = perspective => {
                 b: ["a", "E", undefined, "h", "l"]
             });
 
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "result",
@@ -318,7 +318,7 @@ module.exports = perspective => {
                 b: ["arc".repeat(50), "DEf".repeat(10), undefined, "HIjK", "lMNoP"]
             });
 
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "result",
@@ -351,7 +351,7 @@ module.exports = perspective => {
                     "0ой3֝󻙋򑨮꾪߫0󏜬󆑝w󊭟񑓫򾷄𶳿o󏉃纊ʫ􅋶聍𾋊ô򓨼쀨ˆ퍨׽ȿKOŕ􅽾󙸹Ѩ󶭆j񽪌򸢐p򊘏׷򿣂dｇD쩖2"
                 ]
             });
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "result",
@@ -371,7 +371,7 @@ module.exports = perspective => {
                 a: [">{MeLPPV||iM", "-kiJ!Pwo3J<4uUPfP##Q", "ZQ?x?#$12[I'[|%", "ܦf+=0lciU", "030wo􎼨KOjpdD"],
                 b: [">{MeLPPV||iM", "-kiJ!Pwo3J<4uUPfP##Q", "ZQ?x?#$12[I'[|%", "ܦf+=0lciU", "030wo􎼨KOjpdD2"]
             });
-            let view = table.view({
+            let view = await table.view({
                 computed_columns: [
                     {
                         column: "result",
@@ -391,7 +391,7 @@ module.exports = perspective => {
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"],
                 b: ["ABC", "DEF", "EfG", "HIjK", "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -411,7 +411,7 @@ module.exports = perspective => {
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"],
                 b: ["ABC", "DEF", "EfG", "HIjK", "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -431,7 +431,7 @@ module.exports = perspective => {
                 a: ["ABC", "DEF", null, "HIjK", "lMNoP"],
                 b: ["ABC", undefined, "EfG", "HIjK", "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -454,7 +454,7 @@ module.exports = perspective => {
                 a: ["ABC", "DEF", undefined, "HIjK", "lMNoP"],
                 b: ["ABC", null, "EfG", "HIjK", "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -477,7 +477,7 @@ module.exports = perspective => {
                 a: ["ABC".repeat(10), "DEF".repeat(10), null, "HIjK".repeat(10), "lMNoP".repeat(10)],
                 b: ["ABC", undefined, "EfG", "HIjK", "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -500,7 +500,7 @@ module.exports = perspective => {
                 a: ["ABC".repeat(10), "DEF".repeat(10), undefined, "HIjK".repeat(10), "lMNoP".repeat(10)],
                 b: ["ABC", null, "EfG", "HIjK", "lMNoP"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -523,7 +523,7 @@ module.exports = perspective => {
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",
@@ -545,7 +545,7 @@ module.exports = perspective => {
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });
-            const view = table.view({
+            const view = await table.view({
                 computed_columns: [
                     {
                         column: "computed",

@@ -29,7 +29,8 @@ describe("WebSocketManager", function() {
 
         const client = perspective.websocket(`ws://localhost:${port}`);
         const client_table = client.open_table("test");
-        const client_data = await client_table.view().to_json();
+        const client_view = await client_table.view();
+        const client_data = await client_view.to_json();
         expect(client_data).toEqual(data);
 
         await client.terminate();
@@ -47,8 +48,11 @@ describe("WebSocketManager", function() {
         const client_1_table = client_1.open_table("test");
         const client_2_table = client_2.open_table("test");
 
-        const client_1_data = await client_1_table.view().to_json();
-        const client_2_data = await client_2_table.view().to_json();
+        const client_1_view = await client_1_table.view();
+        const client_2_view = await client_2_table.view();
+
+        const client_1_data = await client_1_view.to_json();
+        const client_2_data = await client_2_view.to_json();
 
         await client_1.terminate();
         await client_2.terminate();
@@ -58,7 +62,7 @@ describe("WebSocketManager", function() {
         server.eject_table("test");
     });
 
-    it("sends updates to client on subscribe", done => {
+    it("sends updates to client on subscribe", async done => {
         const data = [{x: 1}];
         const table = perspective.table(data);
         server.host_table("test", table);
@@ -66,7 +70,7 @@ describe("WebSocketManager", function() {
         const client = perspective.websocket(`ws://localhost:${port}`);
         const client_table = client.open_table("test");
 
-        const client_view = client_table.view();
+        const client_view = await client_table.view();
         // eslint-disable-next-line no-unused-vars
         const on_update = () => {
             client_view.to_json().then(async updated_data => {
@@ -87,7 +91,7 @@ describe("WebSocketManager", function() {
     it("Calls `update` and sends arraybuffers using `binary_length`", async () => {
         const data = [{x: 1}];
         const table = perspective.table(data);
-        const view = table.view();
+        const view = await table.view();
         const arrow = await view.to_arrow();
 
         server.host_table("test", table);
@@ -97,7 +101,8 @@ describe("WebSocketManager", function() {
 
         client_table.update(arrow);
 
-        const client_data = await client_table.view().to_json();
+        const client_view = await client_table.view();
+        const client_data = await client_view.to_json();
         expect(client_data).toEqual([{x: 1}, {x: 1}]);
 
         await client.terminate();
@@ -107,7 +112,7 @@ describe("WebSocketManager", function() {
     it("Calls `update` and sends arraybuffers using `binary_length` multiple times", async () => {
         const data = [{x: 1}];
         const table = perspective.table(data);
-        const view = table.view();
+        const view = await table.view();
         const arrow = await view.to_arrow();
 
         server.host_table("test", table);
@@ -119,7 +124,8 @@ describe("WebSocketManager", function() {
         client_table.update(arrow);
         client_table.update(arrow);
 
-        const client_data = await client_table.view().to_json();
+        const client_view = await client_table.view();
+        const client_data = await client_view.to_json();
         expect(client_data).toEqual([{x: 1}, {x: 1}, {x: 1}, {x: 1}]);
 
         await client.terminate();
@@ -129,7 +135,7 @@ describe("WebSocketManager", function() {
     it("Calls `update` and sends arraybuffers using `on_update`", async done => {
         const data = [{x: 1}];
         const table = perspective.table(data);
-        const view = table.view();
+        const view = await table.view();
         const arrow = await view.to_arrow();
 
         let update_port;

@@ -11,7 +11,7 @@ module.exports = perspective => {
     describe("Clear", function() {
         it("removes the rows from the table", async function() {
             const table = perspective.table([{x: 1}]);
-            const view = table.view();
+            const view = await table.view();
             let json = await view.to_json();
             expect(json).toHaveLength(1);
             table.clear();
@@ -28,7 +28,7 @@ module.exports = perspective => {
                 {x: 1, y: 2},
                 {x: 3, y: 4}
             ]);
-            const view = table.view();
+            const view = await table.view();
             let json = await view.to_json();
             expect(json).toHaveLength(2);
             expect(json).toEqual([
@@ -49,7 +49,7 @@ module.exports = perspective => {
                 {x: 3, y: 4}
             ]);
 
-            const view = table.view();
+            const view = await table.view();
 
             const callback = async function(updated) {
                 expect(updated.port_id).toEqual(0);
@@ -79,12 +79,12 @@ module.exports = perspective => {
                 {x: 3, y: 4}
             ]);
 
-            const view = table.view();
+            const view = await table.view();
 
             const callback = async function(updated) {
                 expect(updated.port_id).toEqual(0);
                 const table2 = perspective.table(updated.delta);
-                const view2 = table2.view();
+                const view2 = await table2.view();
 
                 const json = await view.to_json();
                 expect(json).toHaveLength(1);
@@ -117,7 +117,7 @@ module.exports = perspective => {
                 {x: 1, y: 2},
                 {x: 3, y: 4}
             ]);
-            const view = table.view();
+            const view = await table.view();
             setTimeout(() => table.replace([{x: 5, y: 6}]));
             let json = await view.to_json();
             expect(json).toHaveLength(2);
@@ -143,7 +143,7 @@ module.exports = perspective => {
                 {x: 3, y: 2, z: "b"}
             ];
             const table = perspective.table(input);
-            const view = table.view({row_pivots: ["z"], column_pivots: ["x"], sort: [["y", "asc"]], columns: ["y"]});
+            const view = await table.view({row_pivots: ["z"], column_pivots: ["x"], sort: [["y", "asc"]], columns: ["y"]});
             setTimeout(() => table.replace(input));
             let json = await view.to_json();
             await new Promise(setTimeout);

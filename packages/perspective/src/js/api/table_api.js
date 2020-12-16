@@ -76,6 +76,7 @@ proxy_table.prototype = table.prototype;
 
 // Dispatch table methods that create new objects to the worker
 table.prototype.view = function(config) {
+    console.log("View being created");
     return new view(this._worker, this._name, config);
 };
 

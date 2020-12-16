@@ -9,7 +9,7 @@
 
 const match_delta = async function(perspective, delta, expected) {
     let table = perspective.table(delta);
-    let view = table.view();
+    let view = await table.view();
     let json = await view.to_json();
     expect(json).toEqual(expected);
     await view.delete();
@@ -28,7 +28,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "lowercase",
@@ -60,7 +60,7 @@ module.exports = perspective => {
                     x: "integer",
                     y: "string"
                 });
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "uppercase",
@@ -100,7 +100,7 @@ module.exports = perspective => {
                     },
                     {index: "x"}
                 );
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "lowercase",
@@ -139,7 +139,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
-                self.view = table.view({
+                self.view = await table.view({
                     computed_columns: [
                         {
                             column: "lowercase",
@@ -179,7 +179,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
-                const view = table.view({
+                const view = await table.view({
                     row_pivots: ["lowercase"],
                     computed_columns: [
                         {
@@ -217,7 +217,7 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "lowercase",
@@ -268,7 +268,7 @@ module.exports = perspective => {
                     }
                 );
 
-                const view = table.view({
+                const view = await table.view({
                     computed_columns: [
                         {
                             column: "lowercase",
@@ -278,7 +278,7 @@ module.exports = perspective => {
                     ]
                 });
 
-                const view2 = table.view({
+                const view2 = await table.view({
                     computed_columns: [
                         {
                             column: "length",
@@ -334,9 +334,9 @@ module.exports = perspective => {
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
-                const view = table.view();
+                const view = await table.view();
 
-                const view2 = table.view({
+                const view2 = await table.view({
                     computed_columns: [
                         {
                             column: "lowercase",

@@ -349,7 +349,7 @@ module.exports = perspective => {
                     {x: 4, y: "d", z: false}
                 ]);
             });
-            let view = table.view({});
+            let view = await table.view({});
             let js = await view.to_json();
             expect(js).toEqual([
                 {x: 1, y: "a", z: true},
@@ -371,7 +371,7 @@ module.exports = perspective => {
 
         it("calls delete on a view, then a table", async function() {
             var table = perspective.table(data);
-            var view = table.view();
+            var view = await table.view();
             await view.delete();
             await table.delete();
             expect(true).toEqual(true);
@@ -379,8 +379,8 @@ module.exports = perspective => {
 
         it("calls delete on multiple views, then a table", async function() {
             var table = perspective.table(data);
-            var view1 = table.view();
-            var view2 = table.view();
+            var view1 = await table.view();
+            var view2 = await table.view();
             await view1.delete();
             await view2.delete();
             await table.delete();
@@ -391,7 +391,7 @@ module.exports = perspective => {
     describe("Schema", function() {
         it("0-sided view", async function() {
             const table = perspective.table(int_float_string_data);
-            const view = table.view();
+            const view = await table.view();
             const schema = await view.schema();
             expect(schema).toEqual({int: "integer", float: "float", string: "string"});
             view.delete();
@@ -400,7 +400,7 @@ module.exports = perspective => {
 
         it("0-sided view with columns selection", async function() {
             const table = perspective.table(int_float_string_data);
-            const view = table.view({columns: ["float", "string"]});
+            const view = await table.view({columns: ["float", "string"]});
             const schema = await view.schema();
             expect(schema).toEqual({float: "float", string: "string"});
             view.delete();
@@ -411,7 +411,7 @@ module.exports = perspective => {
     describe("Typed Arrays", function() {
         it("Respects start/end rows", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view();
+            var view = await table.view();
             const result = await view.col_to_js_typed_array("int", {
                 start_row: 1,
                 end_row: 2
@@ -423,7 +423,7 @@ module.exports = perspective => {
 
         it("Int, 0-sided view", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view();
+            var view = await table.view();
             const result = await view.col_to_js_typed_array("int");
             expect(result[0].byteLength).toEqual(16);
             view.delete();
@@ -432,7 +432,7 @@ module.exports = perspective => {
 
         it("Float, 0-sided view", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view();
+            var view = await table.view();
             const result = await view.col_to_js_typed_array("float");
             expect(result[0].byteLength).toEqual(32);
             view.delete();
@@ -441,7 +441,7 @@ module.exports = perspective => {
 
         it("Datetime, 0-sided view", async function() {
             var table = perspective.table(datetime_data);
-            var view = table.view();
+            var view = await table.view();
             var schema = await view.schema();
             expect(schema).toEqual({datetime: "datetime", int: "integer"});
             const result = await view.col_to_js_typed_array("datetime");
@@ -452,7 +452,7 @@ module.exports = perspective => {
 
         it("Int, 1-sided view", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view({
+            var view = await table.view({
                 row_pivots: ["int"],
                 columns: ["int", "float"]
             });
@@ -465,7 +465,7 @@ module.exports = perspective => {
 
         it("Float, 1-sided view", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view({
+            var view = await table.view({
                 row_pivots: ["int"],
                 columns: ["int", "float"]
             });
@@ -477,7 +477,7 @@ module.exports = perspective => {
 
         it("Datetime, 1-sided view", async function() {
             var table = perspective.table(datetime_data);
-            var view = table.view({
+            var view = await table.view({
                 row_pivots: ["int"],
                 columns: ["datetime"],
                 aggregates: {datetime: "high"}
@@ -490,7 +490,7 @@ module.exports = perspective => {
 
         it("Int, 2-sided view with row pivot", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view({
+            var view = await table.view({
                 column_pivots: ["float"],
                 row_pivots: ["int"],
                 columns: ["int", "float"]
@@ -503,7 +503,7 @@ module.exports = perspective => {
 
         it("Float, 2-sided view with row pivot", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view({
+            var view = await table.view({
                 column_pivots: ["float"],
                 row_pivots: ["int"],
                 columns: ["int", "float"]
@@ -516,7 +516,7 @@ module.exports = perspective => {
 
         it("Int, 2-sided view, no row pivot", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view({column_pivots: ["float"]});
+            var view = await table.view({column_pivots: ["float"]});
             const result = await view.col_to_js_typed_array("3.5|int");
             // bytelength should not include the aggregate row
             expect(result[0].byteLength).toEqual(16);
@@ -526,7 +526,7 @@ module.exports = perspective => {
 
         it("Float, 2-sided view, no row pivot", async function() {
             var table = perspective.table(int_float_data);
-            var view = table.view({column_pivots: ["float"]});
+            var view = await table.view({column_pivots: ["float"]});
             const result = await view.col_to_js_typed_array("3.5|float");
             expect(result[0].byteLength).toEqual(32);
             view.delete();
@@ -535,7 +535,7 @@ module.exports = perspective => {
 
         it("Symmetric output with to_columns, 0-sided", async function() {
             let table = perspective.table(int_float_data);
-            let view = table.view();
+            let view = await table.view();
             let cols = await view.to_columns();
 
             for (let col in cols) {
@@ -552,7 +552,7 @@ module.exports = perspective => {
 
         it("Symmetric output with to_columns, 1-sided", async function() {
             let table = perspective.table(int_float_string_data);
-            let view = table.view({
+            let view = await table.view({
                 row_pivots: ["int"],
                 columns: ["int", "float"]
             });
@@ -574,9 +574,9 @@ module.exports = perspective => {
     describe("Other `View`s", function() {
         it("Construct a table from another view", async function() {
             const table = perspective.table(int_float_string_data);
-            const view = table.view();
+            const view = await table.view();
             const table2 = perspective.table(view);
-            const view2 = table2.view();
+            const view2 = await table2.view();
             const data = await view2.to_json();
             expect(data).toEqual(int_float_string_data);
             view2.delete();
@@ -589,7 +589,7 @@ module.exports = perspective => {
     describe("Formatters", function() {
         it("Serializes a simple view to CSV", async function() {
             var table = perspective.table(data);
-            var view = table.view({});
+            var view = await table.view({});
             var answer = `x,y,z\r\n1,a,true\r\n2,b,false\r\n3,c,true\r\n4,d,false`;
             let result = await view.to_csv();
             expect(result).toEqual(answer);
@@ -599,7 +599,7 @@ module.exports = perspective => {
 
         it("Serializes 1 sided view to CSV", async function() {
             var table = perspective.table(data);
-            var view = table.view({
+            var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"]
             });
@@ -612,7 +612,7 @@ module.exports = perspective => {
 
         it("Serializes a 2 sided view to CSV", async function() {
             var table = perspective.table(data);
-            var view = table.view({
+            var view = await table.view({
                 row_pivots: ["z"],
                 column_pivots: ["y"],
                 columns: ["x"]
@@ -626,7 +626,7 @@ module.exports = perspective => {
 
         it("Serializes a simple view to column-oriented JSON", async function() {
             var table = perspective.table(data_3);
-            var view = table.view({});
+            var view = await table.view({});
             let result = await view.to_columns();
             expect(result).toEqual(data_7);
             view.delete();
@@ -638,7 +638,7 @@ module.exports = perspective => {
         it("Does not lose leading 0's when a CSV column is declared as a string", async function() {
             let table = perspective.table({x: "string", y: "integer"});
             table.update("x,y\n000123,000123");
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual([{x: "000123", y: 123}]);
             view.delete();
@@ -652,7 +652,7 @@ module.exports = perspective => {
                 {x: 'Test2"', y: 2},
                 {x: 'Test3, Hello!"', y: 3}
             ]);
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_csv();
             expect(result).toEqual(`x,y\r\n"Test, hello!",1\r\nTest2",2\r\n"Test3, Hello!""",3`);
             view.delete();
@@ -662,12 +662,12 @@ module.exports = perspective => {
         it("Transitively loads a CSV created from `to_csv()` on a table with a datetime column", async function() {
             // Assert that the CSV parser can handle POSIX timestamps.
             let table = perspective.table(arrow_date_data);
-            let view = table.view();
+            let view = await table.view();
             let schema = await table.schema();
             let csv = await view.to_csv();
             let table2 = perspective.table(schema);
             table2.update(csv);
-            let view2 = table2.view();
+            let view2 = await table2.view();
             let csv2 = await view2.to_csv();
             expect(csv2).toEqual(csv);
             view2.delete();
@@ -680,7 +680,7 @@ module.exports = perspective => {
     describe("Constructors", function() {
         it("JSON constructor", async function() {
             var table = perspective.table(data);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(data);
             view.delete();
@@ -689,7 +689,7 @@ module.exports = perspective => {
 
         it("JSON column oriented constructor", async function() {
             var table = perspective.table(col_data);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(data);
             view.delete();
@@ -698,7 +698,7 @@ module.exports = perspective => {
 
         it("Arrow constructor", async function() {
             var table = perspective.table(arrows.test_null_arrow.slice());
-            var view = table.view();
+            var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(arrow_result);
             view.delete();
@@ -707,7 +707,7 @@ module.exports = perspective => {
 
         it("Arrow (chunked format) constructor", async function() {
             var table = perspective.table(arrows.chunked_arrow.slice());
-            var view = table.view();
+            var view = await table.view();
             let result = await view.to_json();
             expect(result.length).toEqual(10);
             view.delete();
@@ -716,7 +716,7 @@ module.exports = perspective => {
 
         it("Arrow date32 constructor", async function() {
             const table = perspective.table(arrows.date32_arrow.slice());
-            const view = table.view();
+            const view = await table.view();
             const result = await view.to_columns();
             expect(result).toEqual(arrow_date_data);
             view.delete();
@@ -725,7 +725,7 @@ module.exports = perspective => {
 
         it("Arrow date64 constructor", async function() {
             const table = perspective.table(arrows.date64_arrow.slice());
-            const view = table.view();
+            const view = await table.view();
             const result = await view.to_columns();
             expect(result).toEqual(arrow_date_data);
             view.delete();
@@ -734,7 +734,7 @@ module.exports = perspective => {
 
         it("Arrow dictionary constructor", async function() {
             const table = perspective.table(arrows.dict_arrow.slice());
-            const view = table.view();
+            const view = await table.view();
             const result = await view.to_columns();
             expect(result).toEqual({
                 a: ["abc", "def", "def", null, "abc"],
@@ -746,7 +746,7 @@ module.exports = perspective => {
 
         it("CSV constructor", async function() {
             var table = perspective.table(csv);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(papaparse.parse(csv, {header: true, dynamicTyping: true}).data);
             view.delete();
@@ -755,7 +755,7 @@ module.exports = perspective => {
 
         it("Meta constructor", async function() {
             var table = perspective.table(meta);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual([]);
             view.delete();
@@ -764,7 +764,7 @@ module.exports = perspective => {
 
         it("Handles floats", async function() {
             var table = perspective.table(data_3);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(data_3);
             view.delete();
@@ -773,7 +773,7 @@ module.exports = perspective => {
 
         it("Infers ints wrapped in strings", async function() {
             var table = perspective.table(int_in_string);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.schema();
             expect(result).toEqual({a: "integer"});
             view.delete();
@@ -782,7 +782,7 @@ module.exports = perspective => {
 
         it("Infers floats wrapped in strings", async function() {
             var table = perspective.table(float_in_string);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.schema();
             expect(result).toEqual({a: "float"});
             view.delete();
@@ -796,7 +796,7 @@ module.exports = perspective => {
                 {x: "", y: 3},
                 {x: "", y: 4}
             ]);
-            var view = table.view();
+            var view = await table.view();
             let result = await view.schema();
             expect(result).toEqual({x: "string", y: "integer"});
             view.delete();
@@ -805,9 +805,9 @@ module.exports = perspective => {
 
         it("Returns the correct number of rows for column-only views", async function() {
             var table = perspective.table(data);
-            var view = table.view();
+            var view = await table.view();
             var num_rows = await view.num_rows();
-            var view2 = table.view({
+            var view2 = await table.view({
                 column_pivots: ["x"]
             });
             var num_rows_col_only = await view2.num_rows();
@@ -823,7 +823,7 @@ module.exports = perspective => {
                 {y: 2, z: 3}
             ];
             var table = perspective.table(int_to_float);
-            var view = table.view();
+            var view = await table.view();
             var json = await view.to_json();
             expect(json).toEqual([
                 {x: 1, y: 2, z: null},
@@ -838,7 +838,7 @@ module.exports = perspective => {
             var table = perspective.table(int_to_float);
             var schema = await table.schema();
             expect(schema).toEqual({x: "integer", y: "integer", z: "integer"});
-            var view = table.view();
+            var view = await table.view();
             var json = await view.to_json();
             expect(json).toEqual([
                 {x: 1, y: null, z: null},
@@ -856,7 +856,7 @@ module.exports = perspective => {
             var table = perspective.table(int_to_float);
             var schema_1 = await table.schema();
             expect(schema_1["a"]).toEqual("string");
-            var view = table.view();
+            var view = await table.view();
             var json = await view.to_json();
             expect(json).toEqual([{a: "1"}, {a: "2"}, {a: "3"}, {a: "x"}, {a: "y"}]);
             view.delete();
@@ -869,7 +869,7 @@ module.exports = perspective => {
             };
 
             var table = perspective.table(int_to_float);
-            var view = table.view();
+            var view = await table.view();
             var json = await view.to_columns();
             expect(json).toEqual(int_to_float);
             var schema_2 = await table.schema();
@@ -911,7 +911,7 @@ module.exports = perspective => {
             var table = perspective.table(int_to_float);
             var schema_1 = await table.schema();
             expect(schema_1["a"]).toEqual("float");
-            let view = table.view();
+            let view = await table.view();
             var data = await view.to_json();
             expect(data).toEqual(int_to_float);
 
@@ -957,7 +957,7 @@ module.exports = perspective => {
         it("Handles date updates when constructed from a schema", async function() {
             var table = perspective.table(meta_4);
             table.update(data_4);
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual([{v: +data_4[0]["v"]}]);
             view.delete();
@@ -966,7 +966,7 @@ module.exports = perspective => {
 
         it("Handles datetime values", async function() {
             var table = perspective.table(data_4);
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual([{v: +data_4[0]["v"]}]);
             view.delete();
@@ -975,7 +975,7 @@ module.exports = perspective => {
 
         it("Handles datetime strings", async function() {
             var table = perspective.table(data_5);
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual([{v: +moment(data_5[0]["v"], "MM-DD-YYYY")}]);
             view.delete();
@@ -985,7 +985,7 @@ module.exports = perspective => {
         it("Handles datetime values with mixed formats", async function() {
             var table = perspective.table({datetime: "datetime"});
             table.update([{datetime: new Date(1549257586108)}, {datetime: "2019-01-30"}, {datetime: 11}]);
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual([{datetime: 1549257586108}, {datetime: 1548806400000}, {datetime: 11}]);
             view.delete();
@@ -995,7 +995,7 @@ module.exports = perspective => {
         it("Handles date values", async function() {
             var table = perspective.table({v: "date"});
             table.update(data_4);
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_json();
             let d = new Date(data_4[0]["v"]);
             d.setHours(0);
@@ -1009,7 +1009,7 @@ module.exports = perspective => {
 
         it("Handles utf16 column names", async function() {
             var table = perspective.table({š: [1, 2, 3]});
-            let view = table.view({});
+            let view = await table.view({});
             let result = await view.schema();
             expect(result).toEqual({š: "integer"});
             view.delete();
@@ -1018,7 +1018,7 @@ module.exports = perspective => {
 
         it("Handles utf16", async function() {
             var table = perspective.table(data_6);
-            let view = table.view({});
+            let view = await table.view({});
             let result = await view.to_json();
             expect(result).toEqual(data_6);
             view.delete();
@@ -1028,42 +1028,42 @@ module.exports = perspective => {
         describe("Datetime constructors", function() {
             it("Correctly parses an ISO-8601 formatted string", async function() {
                 let table = perspective.table({d: ["2011-10-05T14:48:00"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("datetime");
             });
 
             it("Correctly parses an ISO-8601 formatted string 2", async function() {
                 let table = perspective.table({d: ["2011-10-05T14:48:00.000"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("datetime");
             });
 
             it("Correctly parses an ISO-8601 formatted string 3", async function() {
                 let table = perspective.table({d: ["2011-10-05T14:48:00Z"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("datetime");
             });
 
             it("Correctly parses an ISO-8601 formatted string 3", async function() {
                 let table = perspective.table({d: ["2011-10-05T14:48:00.000Z"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("datetime");
             });
 
             it("Correctly parses an ISO-8601 formatted string with timezone", async function() {
                 let table = perspective.table({d: ["2008-09-15T15:53:00+05:00"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("datetime");
             });
 
             it.skip("Correctly parses an RFC 2822 formatted string", async function() {
                 let table = perspective.table({d: ["Wed, 05 Oct 2011 22:26:12 -0400"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("datetime");
             });
@@ -1073,7 +1073,7 @@ module.exports = perspective => {
                 let datestrings = ["08-15-2009", "08/15/2009", "08-15-2009", "02 28 2009", "08/15/10", "31 08 2009"];
                 for (let str of datestrings) {
                     let table = perspective.table({d: [str]});
-                    let view = table.view({});
+                    let view = await table.view({});
                     let result = await view.schema();
                     expect(result["d"]).toEqual("datetime");
                 }
@@ -1082,21 +1082,21 @@ module.exports = perspective => {
             // Only implemented in the C++ date parser - skip
             it.skip("Correctly parses a 'dd mm yyyy' formatted string", async function() {
                 let table = perspective.table({d: ["15 08 08"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("datetime");
             });
 
             it("Does not (for now) parse a date string in non-US formatting", async function() {
                 let table = perspective.table({d: ["2018/07/30"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("string");
             });
 
             it("Does not mistakenly parse a date-like string", async function() {
                 let table = perspective.table({d: ["Jan 14, 14"]});
-                let view = table.view({});
+                let view = await table.view({});
                 let result = await view.schema();
                 expect(result["d"]).toEqual("string");
             });
@@ -1114,7 +1114,7 @@ module.exports = perspective => {
                 data.push([{a: makeid(), b: makeid(), c: makeid(), d: makeid(), w: i + 0.5, x: i, y: makeid()}]);
             }
             let table = perspective.table(data);
-            let view = table.view();
+            let view = await table.view();
             let result = await view.to_json();
             expect(result.length).toEqual(35000);
             view.delete();
@@ -1146,7 +1146,7 @@ module.exports = perspective => {
         describe("Indexed table constructors", function() {
             it("Should index on an integer column", async function() {
                 const table = perspective.table(all_types_data, {index: "int"});
-                const view = table.view();
+                const view = await table.view();
                 expect(await table.size()).toEqual(4);
                 expect(await view.to_json()).toEqual([
                     {int: 1, float: 2.25, string: "a", date: 1579046400000, datetime: 1579069800000, boolean: false},
@@ -1158,7 +1158,7 @@ module.exports = perspective => {
 
             it("Should index on a float column", async function() {
                 const table = perspective.table(all_types_data, {index: "float"});
-                const view = table.view();
+                const view = await table.view();
                 expect(await table.size()).toEqual(4);
                 expect(await view.to_json()).toEqual([
                     {int: 1, float: 2.25, string: "a", date: 1579046400000, datetime: 1579069800000, boolean: false},
@@ -1170,7 +1170,7 @@ module.exports = perspective => {
 
             it("Should index on a string column", async function() {
                 const table = perspective.table(all_types_data, {index: "string"});
-                const view = table.view();
+                const view = await table.view();
                 expect(await table.size()).toEqual(4);
                 expect(await view.to_json()).toEqual([
                     {int: 1, float: 2.25, string: "a", date: 1579046400000, datetime: 1579069800000, boolean: false},
@@ -1182,7 +1182,7 @@ module.exports = perspective => {
 
             it("Should index on a date column", async function() {
                 const table = perspective.table(all_types_data, {index: "date"});
-                const view = table.view();
+                const view = await table.view();
                 expect(await table.size()).toEqual(4);
                 expect(await view.to_json()).toEqual([
                     {int: 1, float: 2.25, string: "a", date: 1579046400000, datetime: 1579069800000, boolean: false},
@@ -1194,7 +1194,7 @@ module.exports = perspective => {
 
             it("Should index on a datetime column", async function() {
                 const table = perspective.table(all_types_data, {index: "datetime"});
-                const view = table.view();
+                const view = await table.view();
                 expect(await table.size()).toEqual(4);
                 expect(await view.to_json()).toEqual([
                     {int: 1, float: 2.25, string: "a", date: 1579046400000, datetime: 1579069800000, boolean: false},
