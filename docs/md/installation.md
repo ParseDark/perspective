@@ -74,7 +74,7 @@ Once added to your page, you can access the Javascript API through the
 
 ```javascript
 const worker = perspective.worker();
-const table = worker.table({A: [1, 2, 3]});
+const table = await worker.table({A: [1, 2, 3]});
 const view = await table.view({sort: [["A", "desc"]]});
 ```
 

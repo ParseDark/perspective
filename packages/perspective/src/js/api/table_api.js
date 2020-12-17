@@ -9,7 +9,6 @@
 
 import {unsubscribe, subscribe, async_queue} from "./dispatch.js";
 import {view} from "./view_api.js";
-import {bindall} from "../utils.js";
 
 /**
  * Construct a proxy for the table object by creating a "table" message and

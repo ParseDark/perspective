@@ -337,7 +337,7 @@ Perspective will not infer these types for you, so you'll need to create your
 table [from a schema](#loading-data-with-table) to use them:
 
 ```javascript
-const table = worker.table({volume: "integer", price: "price"});
+const table = await worker.table({volume: "integer", price: "price"});
 table.update([{volume: 10, price: 100.75}]);
 ```
 
@@ -476,7 +476,7 @@ var view2 = document.getElementById("view2");
 var worker = perspective.worker();
 
 // Create a table in this worker
-var table = worker.table(data);
+var table = await worker.table(data);
 
 // Load the same table in 2 different <perspective-viewer>s
 view1.load(table);

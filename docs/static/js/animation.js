@@ -132,14 +132,14 @@ function get_arrow(callback) {
     xhr.send(null);
 }
 
-window.addEventListener("WebComponentsReady", function() {
+window.addEventListener("WebComponentsReady", async function() {
     var data = [];
     for (var x = 0; x < 100; x++) {
         data.push(newRow());
     }
     elem = Array.prototype.slice.call(document.querySelectorAll("perspective-viewer"))[0];
     var worker = elem.worker;
-    var tbl = worker.table(data, {index: "id"});
+    var tbl = await worker.table(data, {index: "id"});
     elem.load(tbl);
     elem._toggle_config();
 

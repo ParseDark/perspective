@@ -123,7 +123,7 @@ To create a `Table` with a `limit`, provide the `limit` property with an integer
 indicating the `limit`:
 
 ```javascript
-const table = perspective.table(data, {limit: 1000});
+const table = await perspective.table(data, {limit: 1000});
 ```
 
 `limit` cannot be used in conjunction with `index`.
@@ -140,7 +140,7 @@ To create an indexed `Table`, provide the `index` property with a string column
 name to be used as an index:
 
 ```javascript
-const table = perspective.table(data, {index: "a"});
+const table = await perspective.table(data, {index: "a"});
 ```
 
 An indexed `Table` allows for in-place _updates_ whenever a new rows shares an
@@ -158,7 +158,7 @@ If a `Table` was initialized with a `schema` instead of a dataset, use `update`
 to fill the `Table` with data.
 
 ```javascript
-const table = perspective.table({
+const table = await perspective.table({
     a: "integer",
     b: "float"
 });
@@ -171,7 +171,7 @@ using the `index` to determine which rows to update:
 
 ```javascript
 // Create an indexed table
-const table = perspective.table(
+const table = await perspective.table(
     {
         id: [1, 2, 3, 4],
         name: ["a", "b", "c", "d"]
@@ -198,7 +198,7 @@ An indexed `Table` can also have rows removed by primary key:
 
 ```javascript
 // Create an indexed table
-const table = perspective.table(
+const table = await perspective.table(
     {
         id: [1, 2, 3, 4],
         name: ["a", "b", "c", "d"]
@@ -245,7 +245,7 @@ instance via the `view()` method with a set of
 [`View` configuration parameters](https://perspective.finos.org/docs/obj/perspective.html#module_perspective..table+view):
 
 ```javascript
-const table = perspective.table({
+const table = await perspective.table({
     id: [1, 2, 3, 4],
     name: ["a", "b", "c", "d"]
 });

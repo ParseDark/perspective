@@ -60,7 +60,7 @@ const datasource = async function() {
     const arrow = await server_view.to_arrow();
 
     // Create a table in browser memory.
-    const table = worker.table(arrow, {index: "Row ID"});
+    const table = await worker.table(arrow, {index: "Row ID"});
 
     // Clears the progress bar and overlay - added for user experience.
     console.log(`Finished load in: ${performance.now() - load_start}`);

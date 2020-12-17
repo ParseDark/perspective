@@ -66,10 +66,8 @@
             //
             // Client/server editing does not work on an unindexed Table.
             const arrow = await server_view.to_arrow();
-            const client_table = worker.table(arrow, {
-                index: await server_table.get_index()
-            });
-            const client_view = client_table.view();// client -> server
+            const client_table = await worker.table(arrow, {index: "Row ID"});
+            const client_view = await client_table.view();// client -> server
 
             await viewer.load(client_table);
 

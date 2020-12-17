@@ -8,7 +8,6 @@
  */
 
 import {override_config} from "../config";
-import {table} from "./table_api";
 
 function error_to_json(error) {
     const obj = {};
@@ -90,6 +89,9 @@ export class Server {
                         const msgs = this._tables[msg.name];
                         const table = this.perspective.table(msg.args[0], msg.options);
 
+                        // When using the Node server, the `table()` constructor
+                        // returns a Promise, but in the Web Worker version,
+                        // table() synchronously returns an instance of a Table.
                         if (table && table.then) {
                             table
                                 .then(table => {

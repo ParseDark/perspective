@@ -44,7 +44,8 @@
             let table = client.open_table('data_source');
             let view = table.view();
             let arrow = await view.to_arrow();
-            elem.load(perspective.worker().table(arrow));
+            let table = await perspective.worker().table(arrow);
+            elem.load(table);
         });
     </script>
 
