@@ -132,6 +132,11 @@ class _PerspectiveManagerInternal(object):
                     self._tables[msg["name"]] = Table(
                         data_or_schema, **msg.get("options", {})
                     )
+
+                    # Return the Table's name to the front end so it can be
+                    # resolved.
+                    message = self._make_message(msg["id"], msg["name"])
+                    post_callback(self._message_to_json(msg["id"], message))
                 except IndexError:
                     self._tables[msg["name"]] = []
             elif cmd == "view":
@@ -140,6 +145,9 @@ class _PerspectiveManagerInternal(object):
                 new_view = self._tables[msg["table_name"]].view(**msg.get("config", {}))
                 new_view._client_id = client_id
                 self._views[msg["view_name"]] = new_view
+
+                # Return the View's name to the front end so it can be
+                # resolved.
                 message = self._make_message(msg["id"], msg["view_name"])
                 post_callback(self._message_to_json(msg["id"], message))
             elif cmd == "table_method" or cmd == "view_method":

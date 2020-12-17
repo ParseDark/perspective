@@ -8,6 +8,7 @@
  */
 
 import {override_config} from "../config";
+import {table} from "./table_api";
 
 function error_to_json(error) {
     const obj = {};
@@ -85,14 +86,48 @@ export class Server {
                     // arrow before the table will be ready.
                     this._tables[msg.name] = [];
                 } else {
-                    const msgs = this._tables[msg.name];
-                    this._tables[msg.name] = this.perspective.table(msg.args[0], msg.options);
+                    try {
+                        const msgs = this._tables[msg.name];
+                        const table = this.perspective.table(msg.args[0], msg.options);
 
-                    // Process cached messages for this table.
-                    if (msgs) {
-                        for (const msg of msgs) {
-                            this.process(msg);
+                        if (table && table.then) {
+                            table
+                                .then(table => {
+                                    this._tables[msg.name] = table;
+
+                                    // Process cached messages for this table.
+                                    if (msgs) {
+                                        for (const msg of msgs) {
+                                            this.process(msg);
+                                        }
+                                    }
+
+                                    // Resolve the promise to return a Table.
+                                    this.post({
+                                        id: msg.id,
+                                        data: msg.name
+                                    });
+                                })
+                                .catch(error => this.process_error(msg, error));
+                        } else {
+                            this._tables[msg.name] = table;
+
+                            // Process cached messages for this table.
+                            if (msgs) {
+                                for (const msg of msgs) {
+                                    this.process(msg);
+                                }
+                            }
+
+                            // Resolve the promise to return a Table.
+                            this.post({
+                                id: msg.id,
+                                data: msg.name
+                            });
                         }
+                    } catch (error) {
+                        this.process_error(msg, error);
+                        return;
                     }
                 }
                 break;

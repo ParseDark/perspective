@@ -20,42 +20,52 @@ import {bindall} from "../utils.js";
  * @param {*} options
  */
 export function table(worker, data, options) {
-    this._worker = worker;
-    let name = options.name || Math.random() + "";
-    this._name = name;
-    bindall(this);
-    if (data.to_arrow) {
-        var msg = {
-            cmd: "table",
-            name: name,
-            args: [],
-            options: options || {}
-        };
-        this._worker.post(msg);
-        data.to_arrow().then(arrow => {
-            var msg = {
+    return new Promise((resolve, reject) => {
+        this._worker = worker;
+        this._name = options.name || Math.random() + "";
+
+        if (data.to_arrow) {
+            this._worker.post({
                 cmd: "table",
-                name: name,
-                args: [arrow],
+                name: this._name,
+                args: [],
                 options: options || {}
-            };
-            this._worker.post(msg);
-            data.on_update(
-                updated => {
-                    this.update(updated.delta);
+            });
+            data.to_arrow().then(arrow => {
+                this._worker.post(
+                    {
+                        cmd: "table",
+                        name: this._name,
+                        args: [arrow],
+                        options: options || {}
+                    },
+                    () => {
+                        data.on_update(
+                            updated => {
+                                this.update(updated.delta);
+                            },
+                            {mode: "row"}
+                        );
+                        resolve(this);
+                    },
+                    reject
+                );
+            });
+        } else {
+            this._worker.post(
+                {
+                    cmd: "table",
+                    name: this._name,
+                    args: [data],
+                    options: options || {}
                 },
-                {mode: "row"}
+                () => {
+                    resolve(this);
+                },
+                reject
             );
-        });
-    } else {
-        var msg = {
-            cmd: "table",
-            name: name,
-            args: [data],
-            options: options || {}
-        };
-        this._worker.post(msg);
-    }
+        }
+    });
 }
 
 table.prototype.type = "table";
@@ -76,7 +86,6 @@ proxy_table.prototype = table.prototype;
 
 // Dispatch table methods that create new objects to the worker
 table.prototype.view = function(config) {
-    console.log("View being created");
     return new view(this._worker, this._name, config);
 };
 
