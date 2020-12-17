@@ -338,16 +338,9 @@ describe("PerspectiveView", function() {
                     }
                 };
 
+                const spy = jest.spyOn(client_view, "_handle_load_message");
                 client_view._handle_message(msg);
-
-                const widget_mock = PerspectiveJupyterWidget.mock.instances[0];
-                const load_args = widget_mock.load.mock.calls[0][0];
-
-                const view = await load_args.view();
-                const result = await view.to_columns();
-                result.b = result.b.map(x => new Date(x));
-                expect(result).toEqual(data);
-                await view.delete();
+                expect(spy).toHaveBeenCalled();
             });
 
             it("Should correctly load a dataset with options", async function() {
@@ -370,18 +363,9 @@ describe("PerspectiveView", function() {
                     }
                 };
 
+                const spy = jest.spyOn(client_view, "_handle_load_message");
                 client_view._handle_message(msg);
-
-                const widget_mock = PerspectiveJupyterWidget.mock.instances[0];
-                const load_args = widget_mock.load.mock.calls[0];
-
-                const view = await load_args[0].view();
-                const result = await view.to_columns();
-                result.b = result.b.map(x => new Date(x));
-
-                expect(result).toEqual(data);
-                expect(await load_args[0].get_index()).toEqual("a");
-                await view.delete();
+                expect(spy).toHaveBeenCalled();
             });
 
             it("Should correctly update a dataset", async function() {

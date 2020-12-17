@@ -24,7 +24,7 @@ describe("WebSocketManager", function() {
 
     it("sends initial data client on subscribe", async () => {
         const data = [{x: 1}];
-        const table = perspective.table(data);
+        const table = await perspective.table(data);
         server.host_table("test", table);
 
         const client = perspective.websocket(`ws://localhost:${port}`);
@@ -39,7 +39,7 @@ describe("WebSocketManager", function() {
 
     it("sends initial data multiples client on subscribe", async () => {
         const data = [{x: 1}];
-        const table = perspective.table(data);
+        const table = await perspective.table(data);
         server.host_table("test", table);
 
         const client_1 = perspective.websocket(`ws://localhost:${port}`);
@@ -64,7 +64,7 @@ describe("WebSocketManager", function() {
 
     it("sends updates to client on subscribe", async done => {
         const data = [{x: 1}];
-        const table = perspective.table(data);
+        const table = await perspective.table(data);
         server.host_table("test", table);
 
         const client = perspective.websocket(`ws://localhost:${port}`);
@@ -90,7 +90,7 @@ describe("WebSocketManager", function() {
 
     it("Calls `update` and sends arraybuffers using `binary_length`", async () => {
         const data = [{x: 1}];
-        const table = perspective.table(data);
+        const table = await perspective.table(data);
         const view = await table.view();
         const arrow = await view.to_arrow();
 
@@ -111,7 +111,7 @@ describe("WebSocketManager", function() {
 
     it("Calls `update` and sends arraybuffers using `binary_length` multiple times", async () => {
         const data = [{x: 1}];
-        const table = perspective.table(data);
+        const table = await perspective.table(data);
         const view = await table.view();
         const arrow = await view.to_arrow();
 
@@ -134,7 +134,7 @@ describe("WebSocketManager", function() {
 
     it("Calls `update` and sends arraybuffers using `on_update`", async done => {
         const data = [{x: 1}];
-        const table = perspective.table(data);
+        const table = await perspective.table(data);
         const view = await table.view();
         const arrow = await view.to_arrow();
 

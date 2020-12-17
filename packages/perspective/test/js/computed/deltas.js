@@ -8,7 +8,7 @@
  */
 
 const match_delta = async function(perspective, delta, expected) {
-    let table = perspective.table(delta);
+    let table = await perspective.table(delta);
     let view = await table.view();
     let json = await view.to_json();
     expect(json).toEqual(expected);
@@ -24,7 +24,7 @@ module.exports = perspective => {
     describe("Computed column update deltas", function() {
         describe("0-sided computed column deltas", function() {
             it("Returns appended rows for normal and computed columns", async function(done) {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
@@ -56,7 +56,7 @@ module.exports = perspective => {
             });
 
             it("Returns appended rows for normal and computed columns from schema", async function(done) {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: "integer",
                     y: "string"
                 });
@@ -93,7 +93,7 @@ module.exports = perspective => {
             });
 
             it("Returns partially updated rows for normal and computed columns", async function(done) {
-                const table = perspective.table(
+                const table = await perspective.table(
                     {
                         x: [1, 2, 3, 4],
                         y: ["A", "B", "C", "D"]
@@ -135,7 +135,7 @@ module.exports = perspective => {
 
             it("Returns appended rows with missing columns for normal and computed columns", async function(done) {
                 const self = this;
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
@@ -175,7 +175,7 @@ module.exports = perspective => {
 
         describe("1-sided computed column deltas", function() {
             it("Returns appended rows for normal and computed columns, 1-sided", async function(done) {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
@@ -213,7 +213,7 @@ module.exports = perspective => {
 
         describe("0-sided computed column deltas with multiple views", function() {
             it("`on_update` on a view with computed column should not contain computed delta when only non-source columns were appended", async function(done) {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });
@@ -258,7 +258,7 @@ module.exports = perspective => {
             });
 
             it("`on_update` on different views with different computed columns should only be notified of their columns", async function(done) {
-                const table = perspective.table(
+                const table = await perspective.table(
                     {
                         x: [1, 2, 3, 4],
                         y: ["A", "B", "C", "D"]
@@ -330,7 +330,7 @@ module.exports = perspective => {
             });
 
             it("`on_update` on view without computed column should not be notified of computed column", async function(done) {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["A", "B", "C", "D"]
                 });

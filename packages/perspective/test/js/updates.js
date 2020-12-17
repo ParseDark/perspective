@@ -68,7 +68,7 @@ const arrow_indexed_result = [
 ];
 
 async function match_delta(perspective, delta, expected) {
-    let table = perspective.table(delta);
+    let table = await perspective.table(delta);
     let view = await table.view();
     let json = await view.to_json();
     expect(json).toEqual(expected);
@@ -79,7 +79,7 @@ async function match_delta(perspective, delta, expected) {
 module.exports = perspective => {
     describe("Removes", function() {
         it("should not remove without explicit index", async function() {
-            const table = perspective.table(meta);
+            const table = await perspective.table(meta);
             table.update(data);
             const view = await table.view();
             table.remove([0, 1]);
@@ -93,7 +93,7 @@ module.exports = perspective => {
         });
 
         it("after an `update()`", async function() {
-            const table = perspective.table(meta, {index: "x"});
+            const table = await perspective.table(meta, {index: "x"});
             table.update(data);
             const view = await table.view();
             table.remove([1, 2]);
@@ -107,7 +107,7 @@ module.exports = perspective => {
         });
 
         it("after a regular data load", async function() {
-            const table = perspective.table(data, {index: "x"});
+            const table = await perspective.table(data, {index: "x"});
             const view = await table.view();
             table.remove([1, 2]);
             const result = await view.to_json();
@@ -120,7 +120,7 @@ module.exports = perspective => {
         });
 
         it("after an `update()`, string pkey", async function() {
-            const table = perspective.table(meta, {index: "y"});
+            const table = await perspective.table(meta, {index: "y"});
             table.update(data);
             const view = await table.view();
             table.remove(["a", "b"]);
@@ -134,7 +134,7 @@ module.exports = perspective => {
         });
 
         it("after a regular data load, string pkey", async function() {
-            const table = perspective.table(data, {index: "y"});
+            const table = await perspective.table(data, {index: "y"});
             const view = await table.view();
             table.remove(["a", "b"]);
             const result = await view.to_json();
@@ -148,7 +148,7 @@ module.exports = perspective => {
 
         it("after an update, date pkey", async function() {
             const datetimes = [new Date(2020, 0, 15), new Date(2020, 1, 15), new Date(2020, 2, 15), new Date(2020, 3, 15)];
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     x: "integer",
                     y: "date",
@@ -177,7 +177,7 @@ module.exports = perspective => {
 
         it("after an update, datetime pkey", async function() {
             const datetimes = [new Date(2020, 0, 15), new Date(2020, 1, 15), new Date(2020, 2, 15), new Date(2020, 3, 15)];
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     x: "integer",
                     y: "datetime",
@@ -206,7 +206,7 @@ module.exports = perspective => {
 
         it("after a regular data load, datetime pkey", async function() {
             const datetimes = [new Date(2020, 0, 15), new Date(2020, 1, 15), new Date(2020, 2, 15), new Date(2020, 3, 15)];
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     x: [1, 2, 3, 4],
                     y: datetimes,
@@ -229,7 +229,7 @@ module.exports = perspective => {
         });
 
         it("multiple single element removes", async function() {
-            const table = perspective.table(meta, {index: "x"});
+            const table = await perspective.table(meta, {index: "x"});
             for (let i = 0; i < 100; i++) {
                 table.update([{x: i, y: "test", z: false}]);
             }
@@ -248,7 +248,7 @@ module.exports = perspective => {
 
     describe("Schema", function() {
         it("updates with columns not in schema", async function() {
-            var table = perspective.table({x: "integer", y: "string"});
+            var table = await perspective.table({x: "integer", y: "string"});
             table.update(data);
             var view = await table.view();
             let result = await view.to_json();
@@ -263,7 +263,7 @@ module.exports = perspective => {
         });
 
         it("coerces to string", async function() {
-            var table = perspective.table({x: "string", y: "string", z: "string"});
+            var table = await perspective.table({x: "string", y: "string", z: "string"});
             table.update(data);
             var view = await table.view();
             let result = await view.to_json();
@@ -280,7 +280,7 @@ module.exports = perspective => {
 
     describe("Updates", function() {
         it("Meta constructor then `update()`", async function() {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             table.update(data);
             var view = await table.view();
             let result = await view.to_json();
@@ -290,7 +290,7 @@ module.exports = perspective => {
         });
 
         it("Meta constructor then column oriented `update()`", async function() {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             table.update(col_data);
             var view = await table.view();
             let result = await view.to_json();
@@ -300,7 +300,7 @@ module.exports = perspective => {
         });
 
         it("Column oriented `update()` with columns in different order to schema", async function() {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
 
             var reordered_col_data = {
                 y: ["a", "b", "c", "d"],
@@ -331,7 +331,7 @@ module.exports = perspective => {
                 {x: 5, y: "j", z: false}
             ];
 
-            var table = perspective.table(col_data, {index: "x"});
+            var table = await perspective.table(col_data, {index: "x"});
             table.update(colUpdate);
             var view = await table.view();
             let result = await view.to_json();
@@ -341,7 +341,7 @@ module.exports = perspective => {
         });
 
         it("`update()` should increment `table.size()` without a view created", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             expect(await table.size()).toEqual(4);
             table.update(data);
             expect(await table.size()).toEqual(8);
@@ -351,8 +351,9 @@ module.exports = perspective => {
         });
 
         it("`update()` unbound to table", async function() {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             var updater = table.update;
+            console.log(updater);
             updater(data);
             let view = await table.view();
             let result = await view.to_json();
@@ -362,7 +363,7 @@ module.exports = perspective => {
         });
 
         it("`update([])` does not error", async function() {
-            let table = perspective.table(meta);
+            let table = await perspective.table(meta);
             let view = await table.view();
             table.update([]);
             let result = await view.to_json();
@@ -372,7 +373,7 @@ module.exports = perspective => {
         });
 
         it("Multiple `update()`s", async function() {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             table.update(data);
             table.update(data);
             var view = await table.view();
@@ -383,7 +384,7 @@ module.exports = perspective => {
         });
 
         it("`update()` called after `view()`", async function() {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             var view = await table.view();
             table.update(data);
             let result = await view.to_json();
@@ -396,7 +397,7 @@ module.exports = perspective => {
     describe("Arrow Updates", function() {
         it("arrow contructor then arrow `update()`", async function() {
             const arrow = arrows.test_arrow;
-            var table = perspective.table(arrow.slice());
+            var table = await perspective.table(arrow.slice());
             table.update(arrow.slice());
             var view = await table.view();
             let result = await view.to_json();
@@ -406,7 +407,7 @@ module.exports = perspective => {
         });
 
         it("non-arrow constructor then arrow `update()`", async function() {
-            let table = perspective.table(arrow_result);
+            let table = await perspective.table(arrow_result);
             let view = await table.view();
             let generated_arrow = await view.to_arrow();
             table.update(generated_arrow);
@@ -417,7 +418,7 @@ module.exports = perspective => {
         });
 
         it("arrow dict contructor then arrow dict `update()`", async function() {
-            var table = perspective.table(arrows.dict_arrow.slice());
+            var table = await perspective.table(arrows.dict_arrow.slice());
             table.update(arrows.dict_update_arrow.slice());
             var view = await table.view();
             let result = await view.to_columns();
@@ -430,7 +431,7 @@ module.exports = perspective => {
         });
 
         it("non-arrow constructor then arrow dict `update()`", async function() {
-            let table = perspective.table({
+            let table = await perspective.table({
                 a: ["a", "b", "c"],
                 b: ["d", "e", "f"]
             });
@@ -446,7 +447,7 @@ module.exports = perspective => {
         });
 
         it("arrow dict contructor then arrow dict `update()` subset of columns", async function() {
-            var table = perspective.table(arrows.dict_arrow.slice());
+            var table = await perspective.table(arrows.dict_arrow.slice());
             table.update(arrows.dict_update_arrow.slice());
             var view = await table.view({
                 columns: ["a"]
@@ -460,7 +461,7 @@ module.exports = perspective => {
         });
 
         it("non-arrow constructor then arrow dict `update()`, subset of columns", async function() {
-            let table = perspective.table({
+            let table = await perspective.table({
                 a: ["a", "b", "c"],
                 b: ["d", "e", "f"]
             });
@@ -477,7 +478,7 @@ module.exports = perspective => {
         });
 
         it("arrow partial `update()` a single column", async function() {
-            let table = perspective.table(arrows.test_arrow.slice(), {index: "i64"});
+            let table = await perspective.table(arrows.test_arrow.slice(), {index: "i64"});
             table.update(arrows.partial_arrow.slice());
             const view = await table.view();
             const result = await view.to_json();
@@ -487,7 +488,7 @@ module.exports = perspective => {
         });
 
         it("arrow partial `update()` a single column with missing rows", async function() {
-            let table = perspective.table(arrows.test_arrow.slice(), {index: "i64"});
+            let table = await perspective.table(arrows.test_arrow.slice(), {index: "i64"});
             table.update(arrows.partial_missing_rows_arrow.slice());
             const view = await table.view();
             const result = await view.to_json();
@@ -497,7 +498,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor, then arrow `update()`", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "integer",
                 b: "float",
                 c: "string"
@@ -517,7 +518,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor, then arrow dictionary `update()`", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "string",
                 b: "string"
             });
@@ -535,7 +536,7 @@ module.exports = perspective => {
         });
 
         it.skip("schema constructor, then indexed arrow dictionary `update()`", async function() {
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     a: "string",
                     b: "string"
@@ -556,7 +557,7 @@ module.exports = perspective => {
         });
 
         it.skip("schema constructor, then indexed arrow dictionary `update()` with more columns than in schema", async function() {
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     a: "string"
                 },
@@ -576,7 +577,7 @@ module.exports = perspective => {
         });
 
         it.skip("schema constructor, then indexed arrow dictionary `update()` with less columns than in schema", async function() {
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     a: "string",
                     b: "string",
@@ -600,7 +601,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor, then indexed arrow `update()`", async function() {
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     a: "integer",
                     b: "float",
@@ -624,7 +625,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor, then arrow update() with more columns than in the Table", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "integer"
             });
             const view = await table.view();
@@ -639,7 +640,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor indexed, then arrow update() with more columns than in the Table", async function() {
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     a: "integer",
                     b: "float"
@@ -662,7 +663,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor, then arrow update() with less columns than in the Table", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "integer",
                 x: "float",
                 y: "string"
@@ -681,7 +682,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor indexed, then arrow update() with less columns than in the Table", async function() {
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     a: "integer",
                     x: "float",
@@ -706,7 +707,7 @@ module.exports = perspective => {
         });
 
         it("schema constructor, then arrow stream and arrow file `update()`", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "integer",
                 b: "float",
                 c: "string"
@@ -728,7 +729,7 @@ module.exports = perspective => {
 
     describe("Notifications", function() {
         it("`on_update()`", async function(done) {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             var view = await table.view();
             view.on_update(
                 async function(updated) {
@@ -743,7 +744,7 @@ module.exports = perspective => {
         });
 
         it("`on_update` before and after `update()`", async function(done) {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             var view = await table.view();
             table.update(data);
             var ran = false;
@@ -763,8 +764,8 @@ module.exports = perspective => {
         });
 
         it("`on_update(table.update) !`", async function(done) {
-            var table1 = perspective.table(meta);
-            var table2 = perspective.table(meta);
+            var table1 = await perspective.table(meta);
+            var table2 = await perspective.table(meta);
             var view1 = await table1.view();
             var view2 = await table2.view();
             view1.on_update(
@@ -784,8 +785,8 @@ module.exports = perspective => {
         });
 
         it("`on_update(table.update)` before and after `update()`", async function(done) {
-            var table1 = perspective.table(meta);
-            var table2 = perspective.table(meta);
+            var table1 = await perspective.table(meta);
+            var table2 = await perspective.table(meta);
             var view1 = await table1.view();
             var view2 = await table2.view();
 
@@ -808,7 +809,7 @@ module.exports = perspective => {
         });
 
         it("properly removes a failed update callback on a table", async function(done) {
-            const table = perspective.table({x: "integer"});
+            const table = await perspective.table({x: "integer"});
             const view = await table.view();
             let size = await table.size();
             let counter = 0;
@@ -841,7 +842,7 @@ module.exports = perspective => {
         });
 
         it("`on_update()` that calls operations on the table should not recurse", async function(done) {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             var view = await table.view();
             view.on_update(async function(updated) {
                 expect(updated.port_id).toEqual(0);
@@ -858,7 +859,7 @@ module.exports = perspective => {
         });
 
         it("`on_update()` should be triggered in sequence", async function(done) {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             var view = await table.view();
 
             let order = [];
@@ -883,7 +884,7 @@ module.exports = perspective => {
         });
 
         it("`on_update()` should be triggered in sequence across multiple views", async function(done) {
-            var table = perspective.table(meta);
+            var table = await perspective.table(meta);
             const views = [await table.view(), await table.view(), await table.view()];
 
             let order = [];
@@ -912,7 +913,7 @@ module.exports = perspective => {
 
     describe("Limit", function() {
         it("{limit: 2} with table of size 4", async function() {
-            var table = perspective.table(data, {limit: 2});
+            var table = await perspective.table(data, {limit: 2});
             var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(data.slice(2));
@@ -921,7 +922,7 @@ module.exports = perspective => {
         });
 
         it("{limit: 5} with 2 updates of size 4", async function() {
-            var table = perspective.table(data, {limit: 5});
+            var table = await perspective.table(data, {limit: 5});
             table.update(data);
             var view = await table.view();
             let result = await view.to_json();
@@ -937,7 +938,7 @@ module.exports = perspective => {
 
         it("{limit: 1} with arrow update", async function() {
             const arrow = arrows.test_arrow.slice();
-            var table = perspective.table(arrow, {limit: 1});
+            var table = await perspective.table(arrow, {limit: 1});
             table.update(arrow.slice());
             var view = await table.view();
             let result = await view.to_json();
@@ -949,7 +950,7 @@ module.exports = perspective => {
 
     describe("Indexed", function() {
         it("{index: 'x'} (int)", async function() {
-            var table = perspective.table(data, {index: "x"});
+            var table = await perspective.table(data, {index: "x"});
             var view = await table.view();
             table.update(data);
             let result = await view.to_json();
@@ -959,7 +960,7 @@ module.exports = perspective => {
         });
 
         it("{index: 'y'} (string)", async function() {
-            var table = perspective.table(data, {index: "y"});
+            var table = await perspective.table(data, {index: "y"});
             var view = await table.view();
             table.update(data);
             let result = await view.to_json();
@@ -973,7 +974,7 @@ module.exports = perspective => {
                 x: [0, 1, null, 2, 3],
                 y: ["a", "b", "c", "d", "e"]
             };
-            const table = perspective.table(data, {index: "x"});
+            const table = await perspective.table(data, {index: "x"});
             const view = await table.view();
             const result = await view.to_columns();
             expect(result).toEqual({
@@ -989,7 +990,7 @@ module.exports = perspective => {
                 x: [0, 1, 2, 3, 4],
                 y: ["", "a", "b", "c", null]
             };
-            const table = perspective.table(data, {index: "y"});
+            const table = await perspective.table(data, {index: "y"});
             const view = await table.view();
             const result = await view.to_columns();
             expect(result).toEqual({
@@ -1005,7 +1006,7 @@ module.exports = perspective => {
                 x: [0, 1, null, 2, 3],
                 y: ["a", "b", "c", "d", "e"]
             };
-            const table = perspective.table(data, {index: "x"});
+            const table = await perspective.table(data, {index: "x"});
             table.update({
                 x: [null, 0],
                 y: ["x", "y"]
@@ -1025,7 +1026,7 @@ module.exports = perspective => {
                 x: [0, 1, 2, 3, 4],
                 y: ["", "a", "b", "c", null]
             };
-            const table = perspective.table(data, {index: "y"});
+            const table = await perspective.table(data, {index: "y"});
             table.update({
                 x: [5, 6],
                 y: ["", null]
@@ -1045,7 +1046,7 @@ module.exports = perspective => {
                 x: ["10/30/2016", "11/1/2016", null, "1/1/2000"],
                 y: [1, 2, 3, 4]
             };
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     x: "date",
                     y: "integer"
@@ -1068,7 +1069,7 @@ module.exports = perspective => {
                 x: ["2016-11-01 11:00:00", "2016-11-01 11:10:00", null, "2016-11-01 11:20:00"],
                 y: [1, 2, 3, 4]
             };
-            const table = perspective.table(
+            const table = await perspective.table(
                 {
                     x: "datetime",
                     y: "integer"
@@ -1087,7 +1088,7 @@ module.exports = perspective => {
         });
 
         it("Arrow with {index: 'i64'} (int)", async function() {
-            var table = perspective.table(arrows.test_arrow.slice(), {index: "i64"});
+            var table = await perspective.table(arrows.test_arrow.slice(), {index: "i64"});
             var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(arrow_result);
@@ -1096,7 +1097,7 @@ module.exports = perspective => {
         });
 
         it("Arrow with {index: 'char'} (char)", async function() {
-            var table = perspective.table(arrows.test_arrow.slice(), {index: "char"});
+            var table = await perspective.table(arrows.test_arrow.slice(), {index: "char"});
             var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(arrow_indexed_result);
@@ -1105,7 +1106,7 @@ module.exports = perspective => {
         });
 
         it("Arrow with {index: 'dict'} (dict)", async function() {
-            var table = perspective.table(arrows.test_arrow.slice(), {index: "dict"});
+            var table = await perspective.table(arrows.test_arrow.slice(), {index: "dict"});
             var view = await table.view();
             let result = await view.to_json();
             expect(result).toEqual(arrow_indexed_result);
@@ -1114,7 +1115,7 @@ module.exports = perspective => {
         });
 
         it("multiple updates on int {index: 'x'}", async function() {
-            var table = perspective.table(data, {index: "x"});
+            var table = await perspective.table(data, {index: "x"});
             var view = await table.view();
             table.update(data);
             table.update(data);
@@ -1126,7 +1127,7 @@ module.exports = perspective => {
         });
 
         it("multiple updates on str {index: 'y'}", async function() {
-            var table = perspective.table(data, {index: "y"});
+            var table = await perspective.table(data, {index: "y"});
             var view = await table.view();
             table.update(data);
             table.update(data);
@@ -1138,7 +1139,7 @@ module.exports = perspective => {
         });
 
         it("multiple updates on str {index: 'y'} with new, old, null pkey", async function() {
-            var table = perspective.table(data, {index: "y"});
+            var table = await perspective.table(data, {index: "y"});
             var view = await table.view();
             table.update([{x: 1, y: "a", z: true}]);
             table.update([{x: 100, y: null, z: true}]);
@@ -1157,7 +1158,7 @@ module.exports = perspective => {
         });
 
         it("{index: 'x'} with overlap", async function() {
-            var table = perspective.table(data, {index: "x"});
+            var table = await perspective.table(data, {index: "x"});
             var view = await table.view();
             table.update(data);
             table.update(data_2);
@@ -1168,7 +1169,7 @@ module.exports = perspective => {
         });
 
         it("update and index (int)", async function(done) {
-            var table = perspective.table(meta, {index: "x"});
+            var table = await perspective.table(meta, {index: "x"});
             var view = await table.view();
             table.update(data);
             view.on_update(
@@ -1186,7 +1187,7 @@ module.exports = perspective => {
         });
 
         it("update and index (string)", async function(done) {
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view();
             table.update(data);
             view.on_update(
@@ -1204,7 +1205,7 @@ module.exports = perspective => {
         });
 
         it("update with depth expansion", async function() {
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view({
                 row_pivots: ["z", "y"],
                 columns: []
@@ -1238,7 +1239,7 @@ module.exports = perspective => {
                 {x: 3, y: "c", z: true},
                 {x: 4, y: "d", z: false}
             ];
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view();
             table.update(data);
             view.on_update(
@@ -1268,7 +1269,7 @@ module.exports = perspective => {
                 {x: 3, y: "c", z: true},
                 {x: 4, y: "d", z: false}
             ];
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view();
             table.update(col_data);
             view.on_update(
@@ -1290,7 +1291,7 @@ module.exports = perspective => {
                 x: [0, 1, null, 2, 3],
                 y: ["a", "b", "c", "d", "e"]
             };
-            const table = perspective.table(data, {index: "x"});
+            const table = await perspective.table(data, {index: "x"});
             const view = await table.view();
             const result = await view.to_columns();
 
@@ -1333,7 +1334,7 @@ module.exports = perspective => {
                 y: ["a", "b", "c", "d", "e"],
                 z: [true, false, true, false, true]
             };
-            const table = perspective.table(data, {index: "x"});
+            const table = await perspective.table(data, {index: "x"});
             const view = await table.view();
             const result = await view.to_columns();
 
@@ -1385,7 +1386,7 @@ module.exports = perspective => {
                 {x: 3, y: "c", z: true},
                 {x: 4, y: "d", z: false}
             ];
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view();
             table.update(col_data);
             view.on_update(
@@ -1405,7 +1406,7 @@ module.exports = perspective => {
 
     describe("null handling", function() {
         it("recalculates sum aggregates when a null unsets a value", async function() {
-            var table = perspective.table(
+            var table = await perspective.table(
                 [
                     {x: 1, y: 1},
                     {x: 2, y: 1}
@@ -1428,7 +1429,7 @@ module.exports = perspective => {
         });
 
         it("can be removed entirely", async function() {
-            var table = perspective.table([{x: 1, y: 1}], {index: "x"});
+            var table = await perspective.table([{x: 1, y: 1}], {index: "x"});
             table.update([{x: 1, y: null}]);
             table.update([{x: 1, y: 1}]);
             var view = await table.view();
@@ -1446,7 +1447,7 @@ module.exports = perspective => {
                 {x: 3, y: "c", z: true},
                 {x: 4, y: "d", z: false}
             ];
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view();
             table.update(data);
             table.update(partial);
@@ -1465,7 +1466,7 @@ module.exports = perspective => {
                 {x: 4, y: "d", z: false},
                 {x: null, y: "e", z: null}
             ];
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view();
             table.update(data);
             table.update(update);
@@ -1487,7 +1488,7 @@ module.exports = perspective => {
                 {x: 3, y: "c", z: true},
                 {x: 4, y: "d", z: false}
             ];
-            var table = perspective.table(meta, {index: "y"});
+            var table = await perspective.table(meta, {index: "y"});
             var view = await table.view();
             table.update(col_data);
             table.update(partial);
@@ -1500,7 +1501,7 @@ module.exports = perspective => {
 
     describe("Viewport", function() {
         it("`height`", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 viewport: {
                     height: 2
@@ -1513,7 +1514,7 @@ module.exports = perspective => {
         });
 
         it("`top`", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 viewport: {
                     top: 2
@@ -1526,7 +1527,7 @@ module.exports = perspective => {
         });
 
         it("`width`", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 viewport: {
                     width: 2
@@ -1540,7 +1541,7 @@ module.exports = perspective => {
         });
 
         it("`left`", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 viewport: {
                     left: 1
@@ -1556,7 +1557,7 @@ module.exports = perspective => {
         });
 
         it("All", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 viewport: {
                     top: 1,
@@ -1577,7 +1578,7 @@ module.exports = perspective => {
 
     describe("implicit index", function() {
         it("should apply single partial update on unindexed table using row id from '__INDEX__'", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             table.update([
                 {
                     __INDEX__: 2,
@@ -1596,7 +1597,7 @@ module.exports = perspective => {
         });
 
         it("should apply single multi-column partial update on unindexed table using row id from '__INDEX__'", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             table.update([
                 {
                     __INDEX__: 2,
@@ -1617,7 +1618,7 @@ module.exports = perspective => {
         });
 
         it("should apply updates using '__INDEX__' on a table with explicit index set", async function() {
-            let table = perspective.table(data, {index: "x"});
+            let table = await perspective.table(data, {index: "x"});
             table.update([
                 {
                     __INDEX__: 2,
@@ -1636,7 +1637,7 @@ module.exports = perspective => {
         });
 
         it("should apply multiple sequential updates using '__INDEX__' on a table with explicit index set", async function() {
-            let table = perspective.table(data, {index: "x"});
+            let table = await perspective.table(data, {index: "x"});
             table.update([
                 {
                     __INDEX__: 2,
@@ -1660,7 +1661,7 @@ module.exports = perspective => {
         });
 
         it("should apply mulitple nonsequential updates using '__INDEX__' on a table with explicit index set", async function() {
-            let table = perspective.table(data, {index: "x"});
+            let table = await perspective.table(data, {index: "x"});
             table.update([
                 {
                     __INDEX__: 2,
@@ -1684,7 +1685,7 @@ module.exports = perspective => {
         });
 
         it("should apply multiple sequential partial updates on unindexed table using '__INDEX__'", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             table.update([
                 {
                     __INDEX__: 0,
@@ -1713,7 +1714,7 @@ module.exports = perspective => {
         });
 
         it("should correctly apply multiple out-of-sequence partial updates on unindexed table using '__INDEX__'", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             table.update([
                 {
                     __INDEX__: 0,
@@ -1747,7 +1748,7 @@ module.exports = perspective => {
         });
 
         it("should stack multiple partial updates on unindexed table using the same '__INDEX__'", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             table.update([
                 {
                     __INDEX__: 0,
@@ -1774,7 +1775,7 @@ module.exports = perspective => {
         });
 
         it("updates without '__INDEX' should append", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             table.update([
                 {
                     __INDEX__: 0,
@@ -1799,7 +1800,7 @@ module.exports = perspective => {
         });
 
         it("should partial update on 1-sided views using implicit '__INDEX__'", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             let view = await table.view({
                 row_pivots: ["x"]
             });
@@ -1835,7 +1836,7 @@ module.exports = perspective => {
         });
 
         it("should partial update on 2-sided views using implicit '__INDEX__'", async function() {
-            let table = perspective.table(data);
+            let table = await perspective.table(data);
             let view = await table.view({
                 row_pivots: ["x"],
                 column_pivots: ["y"]
@@ -1883,7 +1884,7 @@ module.exports = perspective => {
                     done();
                 }, 0);
             };
-            const table = perspective.table(meta);
+            const table = await perspective.table(meta);
             const view = await table.view();
             view.on_update(cb1);
             view.on_update(cb2);
@@ -1905,7 +1906,7 @@ module.exports = perspective => {
                 }, 0);
             };
 
-            const table = perspective.table(meta);
+            const table = await perspective.table(meta);
             const view = await table.view();
             view.on_update(cb1);
             view.on_update(cb2);

@@ -14,7 +14,7 @@
 module.exports = perspective => {
     describe("String, arity 1 computed", function() {
         it("Length", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"]
             });
             const view = await table.view({
@@ -33,7 +33,7 @@ module.exports = perspective => {
         });
 
         it("Length with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["abc", "deeeeef", null, undefined, "abcdefghijk"]
             });
             const view = await table.view({
@@ -52,7 +52,7 @@ module.exports = perspective => {
         });
 
         it("Uppercase", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"]
             });
             const view = await table.view({
@@ -71,7 +71,7 @@ module.exports = perspective => {
         });
 
         it("Uppercase with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["abc", "deeeeef", null, undefined, "abcdefghijk"]
             });
             const view = await table.view({
@@ -90,7 +90,7 @@ module.exports = perspective => {
         });
 
         it.skip("Uppercase, non-utf8", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });
@@ -118,7 +118,7 @@ module.exports = perspective => {
         });
 
         it("Lowercase", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC", "DEF", "EfG", "HIjK", "lMNoP"]
             });
             const view = await table.view({
@@ -137,7 +137,7 @@ module.exports = perspective => {
         });
 
         it("Lowercase with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC", "DEF", null, undefined, "lMNoP"]
             });
             const view = await table.view({
@@ -156,7 +156,7 @@ module.exports = perspective => {
         });
 
         it("Lowercase, non-utf8", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });
@@ -186,7 +186,7 @@ module.exports = perspective => {
 
     describe("String, arity 2 computed", function() {
         it("is", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC", "DEF", null, "HIjK", "lMNoP"],
                 b: ["ABC", undefined, null, "HIjK", "lMNoP"]
             });
@@ -208,7 +208,7 @@ module.exports = perspective => {
         });
 
         it("is with dependencies is not null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC", "DEF", "cba", "HIjK", "lMNoP"],
                 b: ["ABC", "ad", "asudfh", "HIjK", "lMNoP"]
             });
@@ -246,7 +246,7 @@ module.exports = perspective => {
         });
 
         it("is, nulls", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC", "DEF", undefined, null, null],
                 b: ["ABC", "not", "EfG", "HIjK", null]
             });
@@ -268,7 +268,7 @@ module.exports = perspective => {
         });
 
         it("is, extra long", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC".repeat(10), "DEF".repeat(10), null, "HIjK".repeat(10), "lMNoP"],
                 b: ["ABC".repeat(10), "DEF".repeat(10), undefined, "HIjK", "lMNoP"]
             });
@@ -291,7 +291,7 @@ module.exports = perspective => {
         });
 
         it("is, short", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["A", "E", null, "h", "l"],
                 b: ["a", "E", undefined, "h", "l"]
             });
@@ -313,7 +313,7 @@ module.exports = perspective => {
         });
 
         it("is, mixed length", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC".repeat(100), "DEF".repeat(10), null, "hijk".repeat(10), "lm"],
                 b: ["arc".repeat(50), "DEf".repeat(10), undefined, "HIjK", "lMNoP"]
             });
@@ -335,7 +335,7 @@ module.exports = perspective => {
         });
 
         it("is, UTF-8", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: [
                     ">ﺐ{׆Meڱ㒕宾ⷭ̽쉱L𞔚Ո拏۴ګPظǭPۋV|팺㺞㷾墁鴦򒲹|ۿ򧊊䭪񪩛𬦢񺣠񦋳򵾳蛲񖑐iM񊪝񆷯",
                     "灙𬡍瀳։󷿙񅈕ǐ-kʂiJ!P񙺍󵝳̃੝w𬾐򕕉耨󉋦o򰵏詂3򒤹J<ꑭ񃕱Ӏ𛤦4u򉠚UPf􂢳P##Q񪂈",
@@ -367,7 +367,7 @@ module.exports = perspective => {
         });
 
         it("is, UTF-8 converted to Unicode", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: [">{MeLPPV||iM", "-kiJ!Pwo3J<4uUPfP##Q", "ZQ?x?#$12[I'[|%", "ܦf+=0lciU", "030wo􎼨KOjpdD"],
                 b: [">{MeLPPV||iM", "-kiJ!Pwo3J<4uUPfP##Q", "ZQ?x?#$12[I'[|%", "ܦf+=0lciU", "030wo􎼨KOjpdD2"]
             });
@@ -387,7 +387,7 @@ module.exports = perspective => {
         });
 
         it("Concat with space", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"],
                 b: ["ABC", "DEF", "EfG", "HIjK", "lMNoP"]
             });
@@ -407,7 +407,7 @@ module.exports = perspective => {
         });
 
         it("Concat with comma", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["abc", "deeeeef", "fg", "hhs", "abcdefghijk"],
                 b: ["ABC", "DEF", "EfG", "HIjK", "lMNoP"]
             });
@@ -427,7 +427,7 @@ module.exports = perspective => {
         });
 
         it("Concats with space, nulls", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC", "DEF", null, "HIjK", "lMNoP"],
                 b: ["ABC", undefined, "EfG", "HIjK", "lMNoP"]
             });
@@ -450,7 +450,7 @@ module.exports = perspective => {
         });
 
         it("Concats with comma, nulls", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC", "DEF", undefined, "HIjK", "lMNoP"],
                 b: ["ABC", null, "EfG", "HIjK", "lMNoP"]
             });
@@ -473,7 +473,7 @@ module.exports = perspective => {
         });
 
         it("Concats with space, extra long", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC".repeat(10), "DEF".repeat(10), null, "HIjK".repeat(10), "lMNoP".repeat(10)],
                 b: ["ABC", undefined, "EfG", "HIjK", "lMNoP"]
             });
@@ -496,7 +496,7 @@ module.exports = perspective => {
         });
 
         it("Concats with comma, extra long", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["ABC".repeat(10), "DEF".repeat(10), undefined, "HIjK".repeat(10), "lMNoP".repeat(10)],
                 b: ["ABC", null, "EfG", "HIjK", "lMNoP"]
             });
@@ -519,7 +519,7 @@ module.exports = perspective => {
         });
 
         it("Concats with space, non-utf8", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });
@@ -541,7 +541,7 @@ module.exports = perspective => {
         });
 
         it("Concats with comma, non-utf8", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝓊⋁ẅ⤫𝛾𝓏", null],
                 b: ["𝕙ḗľᶅở щṏᵲɭⅾ", "𝑢ⱴⱳẍ𝘺𝘇ӑṣᶑᵴ", "EfG"]
             });

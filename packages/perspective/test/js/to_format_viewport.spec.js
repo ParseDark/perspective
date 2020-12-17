@@ -19,7 +19,7 @@ const data = {
 describe("to_format viewport", function() {
     describe("0 sided", function() {
         it("start_col 0 is the first col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({});
             const cols = await view.to_columns({start_col: 0, end_col: 1});
             expect(cols).toEqual({w: data.w});
@@ -28,7 +28,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 2 is the second col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({});
             const cols = await view.to_columns({start_col: 1, end_col: 2});
             expect(cols).toEqual({x: data.x});
@@ -37,7 +37,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 0, end_col 2 is the first two columns", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({});
             const cols = await view.to_columns({start_col: 0, end_col: 2});
             expect(cols).toEqual({w: data.w, x: data.x});
@@ -48,7 +48,7 @@ describe("to_format viewport", function() {
 
     describe("1 sided", function() {
         it("start_col 0 is the first col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["y"]
             });
@@ -59,7 +59,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 2 is the second col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["y"]
             });
@@ -70,7 +70,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 0, end_col 2 is the first two columns", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["y"]
             });
@@ -83,7 +83,7 @@ describe("to_format viewport", function() {
 
     describe("2 sided", function() {
         it("start_col 0 is the first col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["y"],
                 column_pivots: ["z"]
@@ -95,7 +95,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 2 is the second col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["y"],
                 column_pivots: ["z"]
@@ -107,7 +107,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 0, end_col 2 is the first two columns", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["y"],
                 column_pivots: ["z"]
@@ -121,7 +121,7 @@ describe("to_format viewport", function() {
 
     describe("column only", function() {
         it("start_col 0 is the first col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["z"]
             });
@@ -132,7 +132,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 2 is the second col", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["z"]
             });
@@ -143,7 +143,7 @@ describe("to_format viewport", function() {
         });
 
         it("start_col 0, end_col 2 is the first two columns", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["z"]
             });

@@ -16,7 +16,7 @@ const common = require("./common.js");
 module.exports = perspective => {
     describe("Date, Arity 1 computed", function() {
         it("Hour of day, date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -47,7 +47,7 @@ module.exports = perspective => {
         });
 
         it("Hour of day, date with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -78,7 +78,7 @@ module.exports = perspective => {
         });
 
         it("Day of week, date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -109,7 +109,7 @@ module.exports = perspective => {
         });
 
         it("Day of week, date with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -140,7 +140,7 @@ module.exports = perspective => {
         });
 
         it("Month of year, date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -171,7 +171,7 @@ module.exports = perspective => {
         });
 
         it("Month of year, date with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -202,7 +202,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (s), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -233,7 +233,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (s), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -264,7 +264,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (m), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -295,7 +295,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (m), date with nulls", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -326,7 +326,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (h), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -357,7 +357,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (h), date with nulls", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -388,7 +388,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (D), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -419,7 +419,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (D), date with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -450,7 +450,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (W), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -482,7 +482,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (W), date with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -514,7 +514,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (W), date shouldn't ever overflow at beginning of year", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -546,7 +546,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (M), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -578,7 +578,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (M), date with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -610,7 +610,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (Y), date", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -642,7 +642,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (Y), date with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "date"
             });
 
@@ -676,7 +676,7 @@ module.exports = perspective => {
 
     describe("Datetime, Arity 1 computed", function() {
         it("Hour of day, datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
             const view = await table.view({
@@ -706,7 +706,7 @@ module.exports = perspective => {
         });
 
         it("Hour of day, datetime with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -737,7 +737,7 @@ module.exports = perspective => {
         });
 
         it("Day of week, datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -768,7 +768,7 @@ module.exports = perspective => {
         });
 
         it("Day of week, datetime with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -799,7 +799,7 @@ module.exports = perspective => {
         });
 
         it("Month of year, datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -830,7 +830,7 @@ module.exports = perspective => {
         });
 
         it("Month of year, datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -861,7 +861,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (s), datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -892,7 +892,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (s), datetime with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -923,7 +923,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (m), datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -954,7 +954,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (m), datetime with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -985,7 +985,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (h), datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1016,7 +1016,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (h), datetime with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1047,7 +1047,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (D), datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1078,7 +1078,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (D), datetime with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1109,7 +1109,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (D), datetime at UTC edge", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1140,7 +1140,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (W), datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1172,7 +1172,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (W), datetime with null", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1204,7 +1204,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (W), datetime shouldn't ever overflow at beginning of year", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1236,7 +1236,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (M), datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1268,7 +1268,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (M), datetime with nulls", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1300,7 +1300,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (Y), datetime", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 
@@ -1332,7 +1332,7 @@ module.exports = perspective => {
         });
 
         it("Bucket (Y), datetime with nulls", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 a: "datetime"
             });
 

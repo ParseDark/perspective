@@ -32,7 +32,7 @@ module.exports = perspective => {
     describe("Invariant testing", function() {
         describe("Inverse computed column operations should be invariant", function() {
             jsc.property("(x - y) + x == y", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -56,7 +56,7 @@ module.exports = perspective => {
             });
 
             jsc.property("(x + y) - x - y == 0", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -85,7 +85,7 @@ module.exports = perspective => {
             });
 
             jsc.property("(x + y) - (x + y) == 0", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -109,7 +109,7 @@ module.exports = perspective => {
             });
 
             jsc.property("(x - x) == 0", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -128,7 +128,7 @@ module.exports = perspective => {
             });
 
             jsc.property("(x / x) == 1", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -147,7 +147,7 @@ module.exports = perspective => {
             });
 
             jsc.property("(x + x) - x - x == 0", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -176,7 +176,7 @@ module.exports = perspective => {
             });
 
             jsc.property("sqrt(x ^ 2) == x", generator(100, false), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -200,7 +200,7 @@ module.exports = perspective => {
             });
 
             jsc.property("x ^ 2 == (x * x)", generator(100, false), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -227,7 +227,7 @@ module.exports = perspective => {
             });
 
             jsc.property("x % x == 100", generator(100, false), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -246,7 +246,7 @@ module.exports = perspective => {
             });
 
             jsc.property("abs(x) ? x > 0 == x", generator(100, false), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -267,7 +267,7 @@ module.exports = perspective => {
 
         describe("Comparison operations should be pure with the same inputs.", function() {
             jsc.property("== should always be true with the same input column", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -287,7 +287,7 @@ module.exports = perspective => {
             });
 
             jsc.property("> should always be false with the same input column", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -307,7 +307,7 @@ module.exports = perspective => {
             });
 
             jsc.property("< should always be false with the same input column", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -327,7 +327,7 @@ module.exports = perspective => {
             });
 
             jsc.property("is should always be true with the same input column", generator(), async data => {
-                const table = perspective.table({
+                const table = await perspective.table({
                     a: "float",
                     b: "float",
                     c: "string",
@@ -357,7 +357,7 @@ module.exports = perspective => {
 
         describe("Inverse operations on multiple views inheriting computed columns should be idempotent.", function() {
             jsc.property("(x + y) - x - y == 0", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [
@@ -413,7 +413,7 @@ module.exports = perspective => {
             });
 
             jsc.property("(x - y) + y == x", generator(), async data => {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
 
                 const view = await table.view({
                     computed_columns: [

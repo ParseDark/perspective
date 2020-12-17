@@ -561,7 +561,7 @@ class PerspectiveViewer extends ActionElement {
      * ]);
      * @example <caption>Load perspective.table</caption>
      * const my_viewer = document.getElementById('#my_viewer');
-     * const tbl = perspective.table("x,y\n1,a\n2,b");
+     * const tbl = await perspective.table("x,y\n1,a\n2,b");
      * my_viewer.load(tbl);
      * @example <caption>Load Promise<perspective.table></caption>
      * const my_viewer = document.getElementById('#my_viewer');

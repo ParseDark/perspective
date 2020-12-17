@@ -44,7 +44,7 @@ var data_8 = {
 module.exports = perspective => {
     describe("Aggregate", function() {
         it("old `aggregate` syntax is backwards compatible", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 aggregate: [{column: "x", op: "sum"}],
                 row_pivots: ["z"]
@@ -61,7 +61,7 @@ module.exports = perspective => {
         });
 
         it("['z'], sum", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"]
@@ -78,7 +78,7 @@ module.exports = perspective => {
         });
 
         it("['z'], weighted mean", async function() {
-            var table = perspective.table(data2);
+            var table = await perspective.table(data2);
             var view = await table.view({
                 row_pivots: ["z"],
                 aggregates: {x: ["weighted mean", "y"]},
@@ -96,7 +96,7 @@ module.exports = perspective => {
         });
 
         it("['z'], weighted mean on a table created from schema should return valid values after update", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 x: "integer",
                 y: "integer",
                 z: "boolean"
@@ -123,7 +123,7 @@ module.exports = perspective => {
         });
 
         it("['z'], mean", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -141,7 +141,7 @@ module.exports = perspective => {
         });
 
         it("['z'], mean on a table created from schema should return valid values after update", async function() {
-            const table = perspective.table({
+            const table = await perspective.table({
                 x: "integer",
                 y: "string",
                 z: "boolean"
@@ -166,7 +166,7 @@ module.exports = perspective => {
         });
 
         it("['z'], first by index", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -184,7 +184,7 @@ module.exports = perspective => {
         });
 
         it("['z'], first by index with appends", async function() {
-            var table = perspective.table(data, {index: "y"});
+            var table = await perspective.table(data, {index: "y"});
             var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -207,7 +207,7 @@ module.exports = perspective => {
         });
 
         it("['z'], first by index with partial updates", async function() {
-            var table = perspective.table(data, {index: "y"});
+            var table = await perspective.table(data, {index: "y"});
             var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -230,7 +230,7 @@ module.exports = perspective => {
         });
 
         it("['z'], last by index", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -248,7 +248,7 @@ module.exports = perspective => {
         });
 
         it("['z'], last by index with appends", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -271,7 +271,7 @@ module.exports = perspective => {
         });
 
         it("['z'], last by index with partial updates", async function() {
-            const table = perspective.table(data, {index: "y"});
+            const table = await perspective.table(data, {index: "y"});
             const view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -294,7 +294,7 @@ module.exports = perspective => {
         });
 
         it("['z'], last", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["z"],
                 columns: ["x"],
@@ -326,7 +326,7 @@ module.exports = perspective => {
 
     describe("Aggregates with nulls", function() {
         it("mean", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 3, y: 1},
                 {x: 2, y: 1},
                 {x: null, y: 1},
@@ -351,7 +351,7 @@ module.exports = perspective => {
         });
 
         it("mean with 0", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 3, y: 1},
                 {x: 3, y: 1},
                 {x: 0, y: 1},
@@ -377,7 +377,7 @@ module.exports = perspective => {
         });
 
         it("mean with 0.0 (floats)", async function() {
-            var table = perspective.table({x: "float", y: "integer"});
+            var table = await perspective.table({x: "float", y: "integer"});
             table.update([
                 {x: 3, y: 1},
                 {x: 3, y: 1},
@@ -404,7 +404,7 @@ module.exports = perspective => {
         });
 
         it("sum", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 3, y: 1},
                 {x: 2, y: 1},
                 {x: null, y: 1},
@@ -453,7 +453,7 @@ module.exports = perspective => {
         });
 
         it("mean after update", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 3, y: 1},
                 {x: null, y: 1},
                 {x: null, y: 2}
@@ -480,7 +480,7 @@ module.exports = perspective => {
         });
 
         it("mean at aggregate level", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 4, y: 1, z: "a"},
                 {x: null, y: 1, z: "a"},
                 {x: null, y: 2, z: "a"}
@@ -520,7 +520,7 @@ module.exports = perspective => {
         });
 
         it("null in pivot column", async function() {
-            var table = perspective.table([{x: null}, {x: "x"}, {x: "y"}]);
+            var table = await perspective.table([{x: null}, {x: "x"}, {x: "y"}]);
             var view = await table.view({
                 row_pivots: ["x"],
                 columns: ["x"],
@@ -539,7 +539,7 @@ module.exports = perspective => {
         });
 
         it("weighted mean", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {a: "a", x: 1, y: 200},
                 {a: "a", x: 2, y: 100},
                 {a: "a", x: 3, y: null}
@@ -562,7 +562,7 @@ module.exports = perspective => {
 
     describe("Aggregates with negatives", function() {
         it("sum abs", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 3, y: 1},
                 {x: 2, y: 1},
                 {x: 1, y: 1},
@@ -614,7 +614,7 @@ module.exports = perspective => {
 
     describe("Row pivot", function() {
         it("['x']", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x"],
                 aggregates: {y: "distinct count", z: "distinct count"}
@@ -644,7 +644,7 @@ module.exports = perspective => {
                 {id: 2, name: "Mary", pos: 200, chg: 2},
                 {id: 3, name: "Tom", pos: 300, chg: 3}
             ];
-            const table = perspective.table(schema, {index: "id"});
+            const table = await perspective.table(schema, {index: "id"});
             table.update(rec1);
             let view = await table.view({
                 row_pivots: ["id"],
@@ -673,7 +673,7 @@ module.exports = perspective => {
                     {name: "Krusty", value: 1}
                 ];
 
-                var table = perspective.table(dataWithNulls);
+                var table = await perspective.table(dataWithNulls);
 
                 var view = await table.view({
                     row_pivots: ["name"],
@@ -703,7 +703,7 @@ module.exports = perspective => {
                     {name: "Krusty", value: 1}
                 ];
 
-                var table = perspective.table(dataWithNull1);
+                var table = await perspective.table(dataWithNull1);
                 table.update(dataWithNull2);
 
                 var view = await table.view({
@@ -726,7 +726,7 @@ module.exports = perspective => {
         });
 
         it("['x'] has a schema", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x"]
             });
@@ -737,7 +737,7 @@ module.exports = perspective => {
         });
 
         it("['x'] translates type `string` to `integer` when pivoted by row", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x"],
                 columns: ["y"],
@@ -750,7 +750,7 @@ module.exports = perspective => {
         });
 
         it("['x'] translates type `integer` to `float` when pivoted by row", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["y"],
                 columns: ["x"],
@@ -763,7 +763,7 @@ module.exports = perspective => {
         });
 
         it("['x'] does not translate type when only pivoted by column", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["y"],
                 columns: ["x"],
@@ -776,7 +776,7 @@ module.exports = perspective => {
         });
 
         it("['x'] has the correct # of rows", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x"]
             });
@@ -787,7 +787,7 @@ module.exports = perspective => {
         });
 
         it("['x'] has the correct # of columns", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x"]
             });
@@ -798,7 +798,7 @@ module.exports = perspective => {
         });
 
         it("Row Pivot by date column results in correct headers", async function() {
-            var table = perspective.table({
+            var table = await perspective.table({
                 a: [
                     new Date("2020/01/15"),
                     new Date("2020/02/15"),
@@ -869,7 +869,7 @@ module.exports = perspective => {
         });
 
         it("['z']", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["z"],
                 aggregates: {y: "distinct count", z: "distinct count"}
@@ -886,7 +886,7 @@ module.exports = perspective => {
         });
 
         it("['x', 'z']", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x", "z"],
                 aggregates: {y: "distinct count", z: "distinct count"}
@@ -909,7 +909,7 @@ module.exports = perspective => {
         });
 
         it("['x', 'z'] windowed", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x", "z"]
             });
@@ -929,7 +929,7 @@ module.exports = perspective => {
         });
 
         it("['x', 'z'], pivot_depth = 1", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x", "z"],
                 row_pivot_depth: 1,
@@ -951,7 +951,7 @@ module.exports = perspective => {
 
     describe("Column pivot", function() {
         it("['y'] only, schema", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["y"]
             });
@@ -962,7 +962,7 @@ module.exports = perspective => {
         });
 
         it("['z'] only, datetime column", async function() {
-            var table = perspective.table(data_8);
+            var table = await perspective.table(data_8);
             var view = await table.view({
                 column_pivots: ["z"],
                 columns: ["x", "y"]
@@ -979,7 +979,7 @@ module.exports = perspective => {
         });
 
         it("['x'] only, column-oriented input", async function() {
-            var table = perspective.table(data_7);
+            var table = await perspective.table(data_7);
             var view = await table.view({
                 column_pivots: ["z"]
             });
@@ -995,7 +995,7 @@ module.exports = perspective => {
         });
 
         it("['z'] only, column-oriented output", async function() {
-            var table = perspective.table(data_7);
+            var table = await perspective.table(data_7);
             var view = await table.view({
                 column_pivots: ["z"]
             });
@@ -1015,7 +1015,7 @@ module.exports = perspective => {
         });
 
         it("['y'] only sorted by ['x'] desc", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["y"],
                 sort: [["x", "desc"]]
@@ -1033,7 +1033,7 @@ module.exports = perspective => {
         });
 
         it("['y'] only", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["y"]
             });
@@ -1050,7 +1050,7 @@ module.exports = perspective => {
         });
 
         it("['x'] by ['y']", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["y"],
                 row_pivots: ["x"]
@@ -1069,7 +1069,7 @@ module.exports = perspective => {
         });
 
         it("['x', 'z']", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["x", "z"],
                 columns: ["y"]
@@ -1088,7 +1088,7 @@ module.exports = perspective => {
 
     describe("Expand/Collapse", function() {
         it("Collapse a row in a 2x2 pivot", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 7, y: "A", z: true, a: "AA", b: "BB", c: "CC"},
                 {x: 2, y: "A", z: false, a: "AA", b: "CC", c: "CC"},
                 {x: 5, y: "A", z: true, a: "AA", b: "BB", c: "DD"},
@@ -1127,7 +1127,7 @@ module.exports = perspective => {
 
     describe("Column pivot w/sort", function() {
         it("['y'] by ['z'], sorted by 'x'", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 7, y: "A", z: true},
                 {x: 2, y: "A", z: false},
                 {x: 5, y: "A", z: true},
@@ -1161,7 +1161,7 @@ module.exports = perspective => {
         });
 
         it("['z'] by ['y'], sorted by 'y'", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 7, y: "A", z: true},
                 {x: 2, y: "A", z: false},
                 {x: 5, y: "A", z: true},
@@ -1190,7 +1190,7 @@ module.exports = perspective => {
         });
 
         it("['y'] by ['x'] sorted by ['x'] desc has the correct # of columns", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 column_pivots: ["y"],
                 row_pivots: ["x"],
@@ -1205,7 +1205,7 @@ module.exports = perspective => {
 
     describe("Pivot table operations", function() {
         it("Should not expand past number of row pivots", async function() {
-            var table = perspective.table(data);
+            var table = await perspective.table(data);
             var view = await table.view({
                 row_pivots: ["x"],
                 column_pivots: ["y"]
@@ -1218,7 +1218,7 @@ module.exports = perspective => {
 
     describe("Column paths", function() {
         it("Should return all columns, 0-sided view from schema", async function() {
-            const table = perspective.table(meta);
+            const table = await perspective.table(meta);
             const view = await table.view();
             const paths = await view.column_paths();
             expect(paths).toEqual(["x", "y", "z"]);
@@ -1227,7 +1227,7 @@ module.exports = perspective => {
         });
 
         it("Should return all columns in specified order, 0-sided view from schema", async function() {
-            const table = perspective.table(meta);
+            const table = await perspective.table(meta);
             const view = await table.view({
                 columns: ["z", "y", "x"]
             });
@@ -1238,7 +1238,7 @@ module.exports = perspective => {
         });
 
         it("Should return specified visible columns, 0-sided view from schema", async function() {
-            const table = perspective.table(meta);
+            const table = await perspective.table(meta);
             const view = await table.view({
                 columns: ["x"]
             });
@@ -1249,7 +1249,7 @@ module.exports = perspective => {
         });
 
         it("Should return all columns, 0-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view();
             const paths = await view.column_paths();
             expect(paths).toEqual(["x", "y", "z"]);
@@ -1258,7 +1258,7 @@ module.exports = perspective => {
         });
 
         it("Should return all columns in specified order, 0-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 columns: ["z", "y", "x"]
             });
@@ -1269,7 +1269,7 @@ module.exports = perspective => {
         });
 
         it("Should return specified visible columns, 0-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 columns: ["x"]
             });
@@ -1280,7 +1280,7 @@ module.exports = perspective => {
         });
 
         it("Should return all columns with __ROW_PATH__, 1-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 row_pivots: ["x"]
             });
@@ -1291,7 +1291,7 @@ module.exports = perspective => {
         });
 
         it("Should return all columns in specified order, 1-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 row_pivots: ["x"],
                 columns: ["z", "y", "x"]
@@ -1303,7 +1303,7 @@ module.exports = perspective => {
         });
 
         it("Should return specified visible columns with __ROW_PATH__, 1-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 columns: ["x"],
                 row_pivots: ["x"]
@@ -1315,7 +1315,7 @@ module.exports = perspective => {
         });
 
         it("Should return all columns with __ROW_PATH__, 2-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 row_pivots: ["x"],
                 column_pivots: ["y"]
@@ -1327,7 +1327,7 @@ module.exports = perspective => {
         });
 
         it("Should return specified visible columns with __ROW_PATH__, 2-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 columns: ["z", "y", "x"],
                 row_pivots: ["x"],
@@ -1340,7 +1340,7 @@ module.exports = perspective => {
         });
 
         it("Should return specified visible columns with __ROW_PATH__, 2-sided view", async function() {
-            const table = perspective.table(data);
+            const table = await perspective.table(data);
             const view = await table.view({
                 columns: ["x"],
                 row_pivots: ["x"],

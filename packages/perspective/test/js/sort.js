@@ -18,7 +18,7 @@ module.exports = perspective => {
     describe("Sorts", function() {
         describe("On hidden columns", function() {
             it("Column path should not emit hidden sorts", async function() {
-                var table = perspective.table(data);
+                var table = await perspective.table(data);
                 var view = await table.view({
                     columns: ["w", "y"],
                     sort: [["x", "desc"]]
@@ -30,7 +30,7 @@ module.exports = perspective => {
             });
 
             it("Column path should not emit hidden column sorts", async function() {
-                var table = perspective.table(data);
+                var table = await perspective.table(data);
                 var view = await table.view({
                     columns: ["w"],
                     row_pivots: ["y"],
@@ -44,7 +44,7 @@ module.exports = perspective => {
             });
 
             it("Column path should not emit hidden regular and column sorts", async function() {
-                var table = perspective.table(data);
+                var table = await perspective.table(data);
                 var view = await table.view({
                     columns: ["w"],
                     row_pivots: ["y"],
@@ -61,7 +61,7 @@ module.exports = perspective => {
             });
 
             it("unpivoted", async function() {
-                var table = perspective.table(data);
+                var table = await perspective.table(data);
                 var view = await table.view({
                     columns: ["w", "y"],
                     sort: [["x", "desc"]]
@@ -83,7 +83,7 @@ module.exports = perspective => {
             });
 
             it("row pivot ['y']", async function() {
-                var table = perspective.table(data);
+                var table = await perspective.table(data);
                 var view = await table.view({
                     columns: ["w"],
                     row_pivots: ["y"],
@@ -103,7 +103,7 @@ module.exports = perspective => {
             });
 
             it("row pivot and hidden sort ['y'] with aggregates specified", async function() {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4, 5],
                     y: ["a", "b", "b", "b", "c"]
                 });
@@ -131,7 +131,7 @@ module.exports = perspective => {
             });
 
             it("row pivot and hidden sort ['y'] without aggregates specified", async function() {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4, 5],
                     y: ["a", "b", "b", "b", "c"]
                 });
@@ -153,7 +153,7 @@ module.exports = perspective => {
             });
 
             it("column pivot ['y']", async function() {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
                 const view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
@@ -178,7 +178,7 @@ module.exports = perspective => {
             });
 
             it("column pivot ['y'], col desc sort", async function() {
-                const table = perspective.table(data);
+                const table = await perspective.table(data);
                 const view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
@@ -199,7 +199,7 @@ module.exports = perspective => {
             });
 
             it("column pivot and hidden sort ['y']", async function() {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["a", "a", "a", "b"]
                 });
@@ -223,7 +223,7 @@ module.exports = perspective => {
             });
 
             it("column pivot and hidden col sort ['y']", async function() {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["a", "a", "a", "b"]
                 });
@@ -246,7 +246,7 @@ module.exports = perspective => {
             });
 
             it("column pivot ['y'] with overridden aggregates", async function() {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: [1, 2, 3, 4],
                     y: ["a", "a", "a", "b"]
                 });
@@ -272,7 +272,7 @@ module.exports = perspective => {
             });
 
             it("column pivot ['y'] with extra aggregates", async function() {
-                var table = perspective.table(data);
+                var table = await perspective.table(data);
                 var view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
@@ -296,7 +296,7 @@ module.exports = perspective => {
             });
 
             it("row pivot ['x'], column pivot ['y'], both hidden and asc sorted", async function() {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: ["a", "a", "b", "c"],
                     y: ["x", "x", "y", "x"],
                     z: [1, 2, 3, 4]
@@ -320,7 +320,7 @@ module.exports = perspective => {
             });
 
             it("row pivot ['x'], column pivot ['y'], both hidden and desc sorted", async function() {
-                const table = perspective.table({
+                const table = await perspective.table({
                     x: ["a", "a", "b", "c"],
                     y: ["x", "x", "y", "x"],
                     z: [1, 2, 3, 4]
@@ -344,7 +344,7 @@ module.exports = perspective => {
             });
 
             it("column pivot ['y'] has correct # of columns", async function() {
-                var table = perspective.table(data);
+                var table = await perspective.table(data);
                 var view = await table.view({
                     columns: ["w"],
                     column_pivots: ["y"],
