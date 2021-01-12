@@ -434,7 +434,7 @@ describe("Computed Column", async () => {
                 }
             }
 
-            describe("ctx0", () => {
+            describe("ctx0", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -477,7 +477,7 @@ describe("Computed Column", async () => {
                 }
             });
 
-            describe("ctx1", () => {
+            describe("ctx1", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -486,7 +486,7 @@ describe("Computed Column", async () => {
                     }
                 });
 
-                table = worker.table(data.arrow.slice());
+                table = await worker.table(data.arrow.slice());
 
                 if (table.add_computed) {
                     console.error("Not running pivoted computed column benchmarks on versions before 0.5.0.");
@@ -503,7 +503,7 @@ describe("Computed Column", async () => {
                 });
             });
 
-            describe("ctx2", () => {
+            describe("ctx2", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -512,7 +512,7 @@ describe("Computed Column", async () => {
                     }
                 });
 
-                table = worker.table(data.arrow.slice());
+                table = await worker.table(data.arrow.slice());
 
                 if (table.add_computed) {
                     console.error("Not running pivoted computed column benchmarks on versions before 0.5.0.");
@@ -530,7 +530,7 @@ describe("Computed Column", async () => {
                 });
             });
 
-            describe("ctx1.5", () => {
+            describe("ctx1.5", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -539,7 +539,7 @@ describe("Computed Column", async () => {
                     }
                 });
 
-                table = worker.table(data.arrow.slice());
+                table = await worker.table(data.arrow.slice());
 
                 if (table.add_computed) {
                     console.error("Not running pivoted computed column benchmarks on versions before 0.5.0.");
@@ -570,7 +570,7 @@ describe("Computed Column", async () => {
                 await table.delete();
             });
 
-            describe("ctx0", () => {
+            describe("ctx0", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -579,7 +579,7 @@ describe("Computed Column", async () => {
                     }
                 });
 
-                table = worker.table(data.arrow.slice());
+                table = await worker.table(data.arrow.slice());
 
                 if (table.add_computed) {
                     console.error("Cannot run complex computed column benchmarks on versions before 0.5.0.");
@@ -605,7 +605,7 @@ describe("Computed Column", async () => {
                 });
             });
 
-            describe("ctx1", () => {
+            describe("ctx1", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -614,7 +614,7 @@ describe("Computed Column", async () => {
                     }
                 });
 
-                table = worker.table(data.arrow.slice());
+                table = await worker.table(data.arrow.slice());
 
                 if (table.add_computed) {
                     console.error("Cannot run complex computed column benchmarks on versions before 0.5.0.");
@@ -631,7 +631,7 @@ describe("Computed Column", async () => {
                 });
             });
 
-            describe("ctx2", () => {
+            describe("ctx2", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -640,7 +640,7 @@ describe("Computed Column", async () => {
                     }
                 });
 
-                table = worker.table(data.arrow.slice());
+                table = await worker.table(data.arrow.slice());
 
                 if (table.add_computed) {
                     console.error("Cannot run complex computed column benchmarks on versions before 0.5.0.");
@@ -658,7 +658,7 @@ describe("Computed Column", async () => {
                 });
             });
 
-            describe("ctx1.5", () => {
+            describe("ctx1.5", async () => {
                 let view;
 
                 afterEach(async () => {
@@ -667,7 +667,7 @@ describe("Computed Column", async () => {
                     }
                 });
 
-                table = worker.table(data.arrow.slice());
+                table = await worker.table(data.arrow.slice());
 
                 if (table.add_computed) {
                     console.error("Cannot run complex computed column benchmarks on versions before 0.5.0.");
@@ -747,7 +747,7 @@ async function get_data_browser(worker) {
 
     console.log("Generating JSON");
     const tbl = await worker.table(arrow.slice());
-    const view = tbl.view();
+    const view = await tbl.view();
     const json = await view.to_json();
     const columns = await view.to_columns();
     view.delete();

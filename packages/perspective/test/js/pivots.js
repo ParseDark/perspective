@@ -428,7 +428,7 @@ module.exports = perspective => {
         });
 
         it("abs sum", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 3, y: 1},
                 {x: 2, y: 1},
                 {x: null, y: 1},
@@ -436,7 +436,7 @@ module.exports = perspective => {
                 {x: -4, y: 2},
                 {x: null, y: 2}
             ]);
-            var view = table.view({
+            var view = await table.view({
                 row_pivots: ["y"],
                 columns: ["x"],
                 aggregates: {x: "abs sum"}
@@ -587,7 +587,7 @@ module.exports = perspective => {
         });
 
         it("abs sum", async function() {
-            var table = perspective.table([
+            var table = await perspective.table([
                 {x: 3, y: 1},
                 {x: 2, y: 1},
                 {x: -1, y: 1},
@@ -595,7 +595,7 @@ module.exports = perspective => {
                 {x: -2, y: 2},
                 {x: -3, y: 2}
             ]);
-            var view = table.view({
+            var view = await table.view({
                 row_pivots: ["y"],
                 columns: ["x"],
                 aggregates: {x: "abs sum"}

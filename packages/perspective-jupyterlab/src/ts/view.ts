@@ -11,7 +11,7 @@
 
 import {isEqual} from "underscore";
 import {DOMWidgetView} from "@jupyter-widgets/base";
-import {PerspectiveWorker, Table} from "@finos/perspective";
+import {PerspectiveWorker, Table, View} from "@finos/perspective";
 
 import {PerspectiveJupyterWidget} from "./widget";
 import {PerspectiveJupyterClient, PerspectiveJupyterMessage} from "./client";
@@ -262,7 +262,8 @@ export class PerspectiveView extends DOMWidgetView {
              * passed by the user, and create a new table on the client end.
              */
             const data = msg.data["data"];
-            this.client_worker.table(data, table_options).then(table => {
+            const client_table: Promise<Table> = this.client_worker.table(data, table_options);
+            client_table.then(table => {
                 this.pWidget.load(table);
             });
         } else {
@@ -277,8 +278,8 @@ export class PerspectiveView extends DOMWidgetView {
                 // Get a remote table handle from the Jupyter kernel, and mirror
                 // the table on the client, setting up editing if necessary.
                 const kernel_table: Table = this.perspective_client.open_table(msg.data["table_name"]);
-
-                kernel_table.view().then(kernel_view => {
+                const kernel_view: Promise<View> = kernel_table.view();
+                kernel_view.then(kernel_view => {
                     kernel_view.to_arrow().then((arrow: ArrayBuffer) => {
                         // Create a client side table
                         this.client_worker.table(arrow, table_options).then(client_table => {

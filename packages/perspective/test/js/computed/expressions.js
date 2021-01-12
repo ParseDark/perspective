@@ -535,11 +535,12 @@ module.exports = perspective => {
         });
 
         it("Should not be able to overwrite an existing 'real' column.", async function() {
-            const table = perspective.table(common.int_float_data);
-            expect(() =>
-                table.view({
-                    computed_columns: ['"w" + "x" as "w"']
-                })
+            const table = await perspective.table(common.int_float_data);
+            expect(
+                async () =>
+                    await table.view({
+                        computed_columns: ['"w" + "x" as "w"']
+                    })
             ).toThrow();
             table.delete();
         });

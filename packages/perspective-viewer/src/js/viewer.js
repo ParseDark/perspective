@@ -621,7 +621,7 @@ class PerspectiveViewer extends ActionElement {
      * Deletes this element and clears it's internal state (but not its
      * user state).  This (or the underlying `perspective.view`'s equivalent
      * method) must be called in order for its memory to be reclaimed, as well
-     * as the recipcorcal method on the `perspective.table` which this viewer is
+     * as the reciprocal method on the `perspective.table` which this viewer is
      * bound to.
      *
      * @returns {Promise<Boolean>} Whether or not this call resulted in the
