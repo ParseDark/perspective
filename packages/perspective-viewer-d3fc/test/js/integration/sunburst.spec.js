@@ -21,14 +21,14 @@ utils.with_server({}, () => {
         () => {
             simple_tests.default("skip");
 
-            test.run("sunburst label shows formatted date", async page => {
+            test.capture("sunburst label shows formatted date", async page => {
                 const viewer = await page.$("perspective-viewer");
                 await page.shadow_click("perspective-viewer", "#config_button");
                 await page.evaluate(element => element.setAttribute("row-pivots", '["Ship Date"]'), viewer);
                 await page.evaluate(element => element.setAttribute("columns", '["Sales", "Profit"]'), viewer);
                 await page.evaluate(element => element.setAttribute("filters", '[["Product ID", "==", "FUR-BO-10001798"]]'), viewer);
                 await page.waitForSelector("perspective-viewer:not([updating])");
-                const result = await page.waitFor(
+                await page.waitFor(
                     element => {
                         let elem = element.shadowRoot.querySelector("perspective-d3fc-chart").shadowRoot.querySelector(".segment");
                         if (elem) {
@@ -38,18 +38,17 @@ utils.with_server({}, () => {
                     {},
                     viewer
                 );
-                return !!result;
             });
 
-            test.run("sunburst parent button shows formatted date", async page => {
+            test.capture("sunburst parent button shows formatted date", async page => {
                 const viewer = await page.$("perspective-viewer");
                 await page.shadow_click("perspective-viewer", "#config_button");
                 await page.evaluate(element => element.setAttribute("row-pivots", '["Ship Date", "City"]'), viewer);
                 await page.evaluate(element => element.setAttribute("columns", '["Sales", "Profit"]'), viewer);
                 await page.evaluate(element => element.setAttribute("filters", '[["Product ID", "==", "FUR-BO-10001798"]]'), viewer);
                 await page.waitForSelector("perspective-viewer:not([updating])");
-                await page.mouse.click(500, 400);
-                const result = await page.waitFor(
+                await page.mouse.click(550, 450);
+                await page.waitFor(
                     element => {
                         let elem = element.shadowRoot.querySelector("perspective-d3fc-chart").shadowRoot.querySelector(".parent");
                         if (elem) {
@@ -59,7 +58,6 @@ utils.with_server({}, () => {
                     {},
                     viewer
                 );
-                return !!result;
             });
         },
         {reload_page: false, root: path.join(__dirname, "..", "..", "..")}
