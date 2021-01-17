@@ -151,6 +151,7 @@ class _PerspectiveManagerInternal(object):
                 message = self._make_message(msg["id"], msg["view_name"])
                 post_callback(self._message_to_json(msg["id"], message))
             elif cmd == "table_method" or cmd == "view_method":
+                # Call the method on the table/view instance
                 self._process_method_call(msg, post_callback, client_id)
         except (PerspectiveError, PerspectiveCppError) as error:
             # Log errors and return them to the client
