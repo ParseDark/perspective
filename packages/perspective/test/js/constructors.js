@@ -589,6 +589,26 @@ module.exports = perspective => {
     describe("Errors", function() {
         it("Table constructor should throw an exception and reject promise", async function() {
             expect.assertions(1);
+            perspective.table([1, 2, 3]).catch(error => {
+                expect(error.message).toEqual("abort()");
+            });
+        });
+
+        it("View constructor should throw an exception and reject promise", async function() {
+            expect.assertions(1);
+            const table = await perspective.table(int_float_string_data);
+            table
+                .view({
+                    row_pivots: ["abcd"]
+                })
+                .catch(error => {
+                    expect(error.message).toEqual("abort()");
+                    table.delete();
+                });
+        });
+
+        it("Table constructor should throw an exception on await", async function() {
+            expect.assertions(1);
 
             try {
                 await perspective.table([1, 2, 3]);
@@ -597,7 +617,7 @@ module.exports = perspective => {
             }
         });
 
-        it("View constructor should throw an exception and reject promise", async function() {
+        it("View constructor should throw an exception on await", async function() {
             expect.assertions(1);
             const table = await perspective.table(int_float_string_data);
 
