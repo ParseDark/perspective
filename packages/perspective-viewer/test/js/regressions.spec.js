@@ -118,6 +118,22 @@ utils.with_server({}, () => {
                 },
                 {wait_for_update: false}
             );
+
+            test.capture(
+                "Should load() a promise to a table",
+                async page => {
+                    const viewer = await page.$("perspective-viewer");
+                    await page.evaluate(async viewer => {
+                        await viewer.load(
+                            window.WORKER.table({
+                                a: [1, 2, 3, 4]
+                            })
+                        );
+                    }, viewer);
+                    await page.waitForSelector("perspective-viewer:not([updating])");
+                },
+                {wait_for_update: false}
+            );
         },
         {root: path.join(__dirname, "..", "..")}
     );
