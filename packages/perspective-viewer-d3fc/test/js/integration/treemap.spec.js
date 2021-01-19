@@ -73,7 +73,7 @@ utils.with_server({}, () => {
                 {preserve_hover: true}
             );
 
-            test.capture("treemap parent button shows formatted date", async page => {
+            test.skip("treemap parent button shows formatted date", async page => {
                 const viewer = await page.$("perspective-viewer");
                 await page.shadow_click("perspective-viewer", "#config_button");
                 await page.evaluate(element => element.setAttribute("row-pivots", '["Ship Date", "Ship Mode"]'), viewer);

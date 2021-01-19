@@ -78,6 +78,7 @@
     "superstore_replaces_all_rows_": "03995f23192c53d36160ab55127ff5c0",
     "blank_When_transferables_are_enabled,_transfers_an_arrow_in_load_": "dcfab9d5536933ba80b87b503985f398",
     "blank_When_transferables_are_enabled,_transfers_an_arrow_in_update_": "dcfab9d5536933ba80b87b503985f398",
+    "blank_Should_load_a_promise_to_a_table_": "b5177dbb73cb526019cdc1747617349a",
     "Computed_Expressions_A_type-invalid_expression_should_show_an_error_message": "e03a4b9a23540a6684827a13ea5e6a8e",
     "Computed_Expressions_An_expression_with_invalid_inputs_should_show_an_error_message": "1b855c2069cc817903fe03f105fe36e8",
     "Computed_Expressions_An_expression_that_overwrites_a_real_column_should_show_an_error_message": "869cdfa4d961688724b83d2498d23ef1",

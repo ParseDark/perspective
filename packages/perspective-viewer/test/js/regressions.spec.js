@@ -120,7 +120,7 @@ utils.with_server({}, () => {
             );
 
             test.capture(
-                "Should load() a promise to a table",
+                "Should load a promise to a table.",
                 async page => {
                     const viewer = await page.$("perspective-viewer");
                     await page.evaluate(async viewer => {
