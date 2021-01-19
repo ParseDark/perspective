@@ -256,7 +256,6 @@ if (PSP_WASM_BUILD)
 			-O3 \
 			-g0 \
 			-flto \
-			--closure 1 \
 			-s AGGRESSIVE_VARIABLE_ELIMINATION=1 \
 			")
 	endif()

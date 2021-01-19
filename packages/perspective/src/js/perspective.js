@@ -1802,7 +1802,6 @@ export default function(Module) {
                 throw new Error("WebAssembly not supported");
             } else {
                 console.log("Loading wasm");
-                console.log("NEW VERSION");
                 __MODULE__({
                     wasmBinary: msg.buffer,
                     wasmJSMethod: "native-wasm"

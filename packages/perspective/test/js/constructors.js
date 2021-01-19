@@ -590,7 +590,7 @@ module.exports = perspective => {
         it("Table constructor should throw an exception and reject promise", async function() {
             expect.assertions(1);
             perspective.table([1, 2, 3]).catch(error => {
-                expect(error.message).toEqual("abort()");
+                expect(error.message).toEqual("Abort(): Cannot determine data types without column names!\n");
             });
         });
 
@@ -602,7 +602,7 @@ module.exports = perspective => {
                     row_pivots: ["abcd"]
                 })
                 .catch(error => {
-                    expect(error.message).toEqual("abort()");
+                    expect(error.message).toEqual("Abort(): Invalid column 'abcd' found in View row_pivots.\n");
                     table.delete();
                 });
         });
@@ -613,7 +613,7 @@ module.exports = perspective => {
             try {
                 await perspective.table([1, 2, 3]);
             } catch (error) {
-                expect(error.message).toEqual("abort()");
+                expect(error.message).toEqual("Abort(): Cannot determine data types without column names!\n");
             }
         });
 
@@ -626,7 +626,7 @@ module.exports = perspective => {
                     row_pivots: ["abcd"]
                 });
             } catch (error) {
-                expect(error.message).toEqual("abort()");
+                expect(error.message).toEqual("Abort(): Invalid column 'abcd' found in View row_pivots.\n");
                 table.delete();
             }
         });

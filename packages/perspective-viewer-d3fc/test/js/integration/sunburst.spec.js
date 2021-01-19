@@ -37,9 +37,15 @@ utils.with_server({}, () => {
                 await page.evaluate(element => element.setAttribute("columns", '["Sales", "Profit"]'), viewer);
                 await page.evaluate(element => element.setAttribute("filters", '[["Product ID", "==", "FUR-BO-10001798"]]'), viewer);
                 await page.waitForSelector("perspective-viewer:not([updating])");
+
+                // Click on the sunburst, wait for the animation to render,
+                // and then try to get rid of the tooltip by moving the
+                // mouse again.
                 await page.mouse.click(430, 450);
                 await page.waitFor(500);
                 await page.mouse.click(430, 450);
+                await page.waitFor(500);
+                await page.mouse.move(0, 0);
                 await page.waitFor(500);
             });
         },

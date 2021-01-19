@@ -152,7 +152,11 @@ module.exports = perspective => {
                     ]
                 })
                 .catch(e => {
-                    expect(e.message).toMatch("abort()");
+                    // TODO: this error propagates further than we want to,
+                    // but it is a case that is prevented by the UI. As we
+                    // re-write and refactor the next iteration of computed
+                    // columns, make sure to check this test case.
+                    expect(e.message).toMatch("Abort(): Setting non string column");
                 });
 
             // Earlier view should not break
@@ -190,7 +194,7 @@ module.exports = perspective => {
                     columns: ["computed", "x"]
                 })
                 .catch(e => {
-                    expect(e.message).toMatch("abort()");
+                    expect(e.message).toMatch("Abort(): Invalid column 'computed' found in View columns.\n");
                     view.delete();
                     table.delete();
                     done();
@@ -211,7 +215,7 @@ module.exports = perspective => {
                     ]
                 })
                 .catch(e => {
-                    expect(e.message).toMatch("abort()");
+                    expect(e.message).toMatch("Abort(): View creation failed: could not build computed column 'x' as the input column types are invalid.\n");
                     table.delete();
                     done();
                 });
@@ -776,7 +780,7 @@ module.exports = perspective => {
                     columns: ["int + float", "x"]
                 });
             } catch (e) {
-                expect(e.message).toEqual("abort()");
+                expect(e.message).toEqual("Abort(): Invalid column 'int + float' found in View columns.\n");
             }
 
             view.delete();

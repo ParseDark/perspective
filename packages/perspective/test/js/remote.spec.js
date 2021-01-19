@@ -37,7 +37,29 @@ describe("WebSocketManager", function() {
         server.eject_table("test");
     });
 
-    it("sends initial data multiples client on subscribe", async () => {
+    it("passes back errors from server", async () => {
+        expect.assertions(2);
+
+        const data = [{x: 1}];
+        const table = await perspective.table(data);
+        server.host_table("test", table);
+
+        const client = perspective.websocket(`ws://localhost:${port}`);
+        const client_table = client.open_table("test");
+
+        client_table.view({columns: ["z"]}).catch(error => {
+            expect(error.message).toBe("Abort(): Invalid column 'z' found in View columns.\n");
+        });
+
+        const client_view = await client_table.view();
+        const client_data = await client_view.to_json();
+        expect(client_data).toEqual(data);
+
+        await client.terminate();
+        server.eject_table("test");
+    });
+
+    it("sends initial data multiple client on subscribe", async () => {
         const data = [{x: 1}];
         const table = await perspective.table(data);
         server.host_table("test", table);
@@ -59,6 +81,38 @@ describe("WebSocketManager", function() {
 
         expect(client_1_data).toEqual(data);
         expect(client_2_data).toEqual(data);
+        server.eject_table("test");
+    });
+
+    it("passes back errors with multiple client on subscribe", async () => {
+        expect.assertions(3);
+
+        const data = [{x: 1}];
+        const table = await perspective.table(data);
+        server.host_table("test", table);
+
+        const client_1 = perspective.websocket(`ws://localhost:${port}`);
+        const client_2 = perspective.websocket(`ws://localhost:${port}`);
+
+        const client_1_table = client_1.open_table("test");
+        const client_2_table = client_2.open_table("test");
+
+        client_1_table.view({columns: ["z"]}).catch(error => {
+            expect(error.message).toBe("Abort(): Invalid column 'z' found in View columns.\n");
+        });
+
+        const client_1_view = await client_1_table.view();
+        const client_2_view = await client_2_table.view();
+
+        const client_1_data = await client_1_view.to_json();
+        const client_2_data = await client_2_view.to_json();
+
+        await client_1.terminate();
+        await client_2.terminate();
+
+        expect(client_1_data).toEqual(data);
+        expect(client_2_data).toEqual(data);
+
         server.eject_table("test");
     });
 

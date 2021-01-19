@@ -79,18 +79,14 @@ utils.with_server({}, () => {
                 await page.evaluate(element => element.setAttribute("row-pivots", '["Ship Date", "Ship Mode"]'), viewer);
                 await page.evaluate(element => element.setAttribute("columns", '["Sales", "Profit"]'), viewer);
                 await page.waitForSelector("perspective-viewer:not([updating])");
+
+                // Click on the chart, wait for the animation to render,
+                // and then try to get rid of the tooltip by moving the
+                // mouse again.
                 await page.mouse.click(500, 200);
-                await page.waitFor(
-                    element => {
-                        let chart = element.shadowRoot.querySelector("perspective-d3fc-chart");
-                        let elem = chart.shadowRoot.querySelector("#goto-parent");
-                        if (elem) {
-                            return elem.textContent.includes("9/21/2012, 12:00:00 AM");
-                        }
-                    },
-                    {},
-                    viewer
-                );
+                await page.waitFor(500);
+                await page.mouse.move(0, 0);
+                await page.waitFor(500);
             });
         },
         {reload_page: false, root: path.join(__dirname, "..", "..", "..")}
