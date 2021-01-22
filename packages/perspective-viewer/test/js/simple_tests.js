@@ -69,6 +69,12 @@ exports.default = function(method = "capture") {
         const viewer = await page.$("perspective-viewer");
         await page.shadow_click("perspective-viewer", "#config_button");
         await page.evaluate(element => element.setAttribute("filters", '[["Order Date", ">", "01/01/2012"]]'), viewer);
+        // Clear blinking cursor by pressing the mouse down for the entire
+        // screenshot so it is always there. This is bad, but none of the
+        // other click or shadow_click methods seem to work.
+        await page.mouse.move(800, 600);
+        await page.mouse.down();
+        await page.waitFor(250);
     });
 
     test[method]("highlights invalid filter.", async page => {
