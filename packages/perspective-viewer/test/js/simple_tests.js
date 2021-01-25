@@ -70,6 +70,10 @@ exports.default = function(method = "capture") {
         await page.shadow_click("perspective-viewer", "#config_button");
         await page.evaluate(element => element.setAttribute("filters", '[["Order Date", ">", "01/01/2012"]]'), viewer);
         await page.waitForSelector("perspective-viewer:not([updating])");
+        await page.shadow_click("perspective-viewer", "#config_button");
+        await page.waitForSelector("perspective-viewer:not([updating])");
+        await page.shadow_click("perspective-viewer", "#config_button");
+        await page.waitForSelector("perspective-viewer:not([updating])");
     });
 
     test[method]("highlights invalid filter.", async page => {

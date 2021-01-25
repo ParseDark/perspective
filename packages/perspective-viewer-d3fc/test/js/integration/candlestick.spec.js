@@ -28,6 +28,11 @@ utils.with_server({}, () => {
                 await page.shadow_click("perspective-viewer", "#config_button");
                 await page.evaluate(element => element.setAttribute("column-pivots", '["Name"]'), viewer);
                 await page.evaluate(element => element.setAttribute("filters", '[["Date", ">", "2019-01-01"]]'), viewer);
+                await page.waitForSelector("perspective-viewer:not([updating])");
+                await page.shadow_click("perspective-viewer", "#config_button");
+                await page.waitForSelector("perspective-viewer:not([updating])");
+                await page.shadow_click("perspective-viewer", "#config_button");
+                await page.waitForSelector("perspective-viewer:not([updating])");
             });
         },
         {reload_page: false, root: path.join(__dirname, "..", "..", "..")}
