@@ -22,7 +22,7 @@ module.exports = {
         maxEntrypointSize: 512000,
         maxAssetSize: 512000
     },
-    externals: /\@jupyterlab|\@lumino|\@jupyter-widgets/,
+    externals: [/^[a-z0-9@]/],
     stats: {modules: false, hash: false, version: false, builtAt: false, entrypoints: false},
     module: {
         rules: [
